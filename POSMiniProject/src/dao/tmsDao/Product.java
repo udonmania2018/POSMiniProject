@@ -19,7 +19,7 @@ public class Product {
 		if (!checkdir.exists()) {
 			checkdir.mkdirs();
 		}
-
+		////
 		// 기존의 데이터값 불러오기
 		ArrayList<ProductGroup> orignData = selectProductGroup();
 		if (orignData == null) {
