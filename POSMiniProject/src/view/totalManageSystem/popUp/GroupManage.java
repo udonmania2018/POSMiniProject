@@ -20,6 +20,7 @@ import javax.swing.JTextPane;
 import javax.swing.border.EmptyBorder;
 
 import dao.tmsDao.Product;
+import model.vo.ManufactureGroup;
 import model.vo.ProductGroup;
 import view.totalManageSystem.management.ManagementSystem;
 
@@ -29,7 +30,8 @@ public class GroupManage extends JFrame {
 	private JTextField codTxt;
 	private JTextField nameTxt;
 	private Product dao = new Product();
-	public GroupManage(String groupCheck,boolean check) {
+
+	public GroupManage(String groupCheck, boolean check) {
 		this.setBounds(100, 100, 380, 380);
 		addGroup = new JPanel();
 		addGroup.setBackground(Color.WHITE);
@@ -43,14 +45,12 @@ public class GroupManage extends JFrame {
 				MainFrame.popUpMainFrameCheck = true;
 			}
 		});
-		
-		
+
 		// 제품 분류 코드
 		JTextPane code = new JTextPane();
 		code.setFont(new Font("맑은 고딕", Font.BOLD, 28));
 		String group = null;
-		
-		
+
 		code.setBounds(58, 35, 300, 44);
 		code.setEditable(false);
 		addGroup.add(code);
@@ -61,19 +61,19 @@ public class GroupManage extends JFrame {
 		codTxt.setEditable(false);
 		addGroup.add(codTxt);
 		codTxt.setColumns(10);
-		
-		if(groupCheck.equals("product")){
-			group ="제품 분류";
+
+		if (groupCheck.equals("product")) {
+			group = "제품 분류";
 			codTxt.setText(dao.getProudctGroupCode());
-		} else if(groupCheck.equals("manufacturer")){
-			group ="제조회사 분류";
-		} else if(groupCheck.equals("eventGroup")){
-			group ="이벤트 분류";
+		} else if (groupCheck.equals("manufacturer")) {
+			group = "제조회사 분류";
+		} else if (groupCheck.equals("eventGroup")) {
+			group = "이벤트 분류";
 		}
-		code.setText(group+" 코드");
+		code.setText(group + " 코드");
 		// 제품 분류명
 		JTextPane name = new JTextPane();
-		name.setText(group+"명");
+		name.setText(group + "명");
 		name.setFont(new Font("맑은 고딕", Font.BOLD, 28));
 		name.setBounds(58, 148, 300, 44);
 		name.setEditable(false);
@@ -89,8 +89,7 @@ public class GroupManage extends JFrame {
 		backButton = new JButton(new ImageIcon("images/buttonsImages/CANCEL_ICON.PNG"));
 		backButton.setBorderPainted(false); // 버튼 테두리 설정해제
 
-		
-		// 버튼 이벤트 구현시 groupCheck 값에 따라 
+		// 버튼 이벤트 구현시 groupCheck 값에 따라
 		// 구분해서 DB 실행
 		if (check) {// 추가 버튼
 			JButton addButton;
@@ -101,20 +100,26 @@ public class GroupManage extends JFrame {
 
 			backButton.setBounds(192, 273, 100, 40); // 버튼 크기 지정
 			addGroup.add(backButton);
-			
-			if(groupCheck.equals("product")){
-				addButton.addActionListener(new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						// 제품 분류 DB에 추가 처리 기능
-						ProductGroup pg = new ProductGroup((codTxt.getText()),nameTxt.getText());
+
+			addButton.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// 제품 분류 DB에 추가 처리 기능
+
+					if (groupCheck.equals("product")) {
+						ProductGroup pg = new ProductGroup((codTxt.getText()), nameTxt.getText());
 						dao.addProductGroup(pg);
+					} else if (groupCheck.equals("manufacturer")) {
+						ManufactureGroup mfg = new ManufactureGroup(codTxt.getText(), nameTxt.getText());
+						dao.addManufacturer(mfg);
 					}
-				});
-			}
-		
-			
-		} else {
+					dispose();
+				}
+
+			});
+		}
+
+		else {
 			JButton modifyBtn;
 			modifyBtn = new JButton(new ImageIcon("images/buttonsImages/MODIFY_ICON.PNG"));
 			modifyBtn.setBorderPainted(false); // 버튼 테두리 설정해제
@@ -127,14 +132,14 @@ public class GroupManage extends JFrame {
 			deleteBtn.setBorderPainted(false); // 버튼 테두리 설정해제
 			deleteBtn.setBounds(140, 270, 100, 40); // 버튼 크기 지정
 			addGroup.add(deleteBtn);
-			
+
 			backButton.setBounds(260, 270, 100, 40);
 			addGroup.add(backButton);
 
 		}
 		JFrame temp = this;
 		backButton.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
@@ -142,7 +147,7 @@ public class GroupManage extends JFrame {
 				MainFrame.popUpMainFrameCheck = true;
 			}
 		});
-		
+
 		getContentPane().add(addGroup);
 		this.setResizable(false);
 		this.setVisible(true);

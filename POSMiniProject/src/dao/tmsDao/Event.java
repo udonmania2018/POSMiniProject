@@ -23,7 +23,9 @@ public class Event {
 		if (!checkdir.exists()) {
 			checkdir.mkdirs();
 		}
-
+  
+		
+		
 		// 기존의 데이터값 불러오기
 		ArrayList<EventGroup> orignData = selectEventGroup();
 		if (orignData == null) {
