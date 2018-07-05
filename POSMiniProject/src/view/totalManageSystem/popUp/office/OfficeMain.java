@@ -27,8 +27,7 @@ public class OfficeMain extends JPanel{
 	private DefaultTableModel model ;
 	private JTable userTable ;
 	private JScrollPane scroll;
-
-	///
+	
 	public OfficeMain(){
 		this.setBounds(0,0,580,600);
 		this.setBackground(Color.WHITE);
