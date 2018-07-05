@@ -95,6 +95,7 @@ public class GroupManage extends JFrame {
 			}
 		});
 		
+		
 		addGroup.add(nameTxt);
 		// 취소 버튼
 		JButton backButton;
