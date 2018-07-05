@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 import model.vo.EventGroup;
 
-// 이벤트 테스트 클래스
+// 이벤트 테스트 클래스.
 public class Event {
 	public void addEventGroup(EventGroup eg) {
 		// 폴더가 있는지
