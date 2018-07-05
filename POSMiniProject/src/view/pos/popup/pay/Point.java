@@ -9,6 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.Color;
 
+// 디자인 수정 필요
 public class Point extends JPanel {
 	private JTextField textField_2;
 
