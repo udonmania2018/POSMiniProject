@@ -13,13 +13,17 @@ import java.util.ArrayList;
 import model.vo.ProductGroup;
 
 public class Product {
-	public void addProductGroup(ProductGroup pg) {
+	File checkdir;
+	public Product() {
 		// 폴더가 있는지
-		File checkdir = new File("C:\\POSDB");
+		checkdir = new File("C:\\POSDB");
 		if (!checkdir.exists()) {
 			checkdir.mkdirs();
 		}
-		////
+	}
+
+	public void addProductGroup(ProductGroup pg) {
+
 		// 기존의 데이터값 불러오기
 		ArrayList<ProductGroup> orignData = selectProductGroup();
 		if (orignData == null) {
@@ -51,12 +55,6 @@ public class Product {
 		// 읽어온 데이터를 저장할 컬렉션 선언
 		ArrayList<ProductGroup> list = new ArrayList<ProductGroup>();
 
-		// 폴더가 있는지 확인
-		File checkdir = new File("C:\\POSDB");
-		if (!checkdir.exists()) {
-			checkdir.mkdirs();
-		}
-
 		// 파일 읽어오기
 		try (ObjectInputStream ois = new ObjectInputStream(
 				new FileInputStream(checkdir.getPath() + "\\productGroup.dat"))) {
@@ -84,32 +82,32 @@ public class Product {
 
 		return list;
 	}
-	
+
 	public String getProudctGroupCode() {
-		
+
 		int cnt = 1;
-		
-		try(ObjectInputStream ois = new ObjectInputStream(
-				new FileInputStream("C:\\POSDB\\productGroup.dat"))){
-			
-			while(ois.read() != -1){
+
+		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("C:\\POSDB\\productGroup.dat"))) {
+
+			while (ois.read() != -1) {
 				cnt++;
 			}
-			
+
 		} catch (FileNotFoundException e) {
 			return "001";
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		String code = null;;
-		if(cnt< 10){
-			code = "00"+cnt;
-		} else if ( cnt < 100){
-			code = "0"+cnt;
+
+		String code = null;
+		;
+		if (cnt < 10) {
+			code = "00" + cnt;
+		} else if (cnt < 100) {
+			code = "0" + cnt;
 		}
-		
+
 		return code;
 	}
 }
