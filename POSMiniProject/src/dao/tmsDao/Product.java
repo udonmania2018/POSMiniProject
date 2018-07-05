@@ -10,6 +10,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
+import model.vo.ManufactureGroup;
 import model.vo.ProductGroup;
 
 public class Product {
@@ -109,5 +110,11 @@ public class Product {
 		}
 
 		return code;
+	}
+
+
+	public void addManufacturer(ManufactureGroup mfg) {
+		// TODO Auto-generated method stub
+		
 	}
 }
