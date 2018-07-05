@@ -4,8 +4,8 @@ import java.io.Serializable;
 
 public class ManufactureGroup implements Serializable{
 
-	private String manufactureGroupName ;
 	private String manufactureGroupCode;
+	private String manufactureGroupName ;
 	
 	public ManufactureGroup() { }
 	

@@ -5,6 +5,8 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
@@ -83,6 +85,16 @@ public class GroupManage extends JFrame {
 		nameTxt = new JTextField("내용을 입력해주세요.");
 		nameTxt.setColumns(10);
 		nameTxt.setBounds(58, 192, 264, 44);
+		
+		nameTxt.addMouseListener(new MouseAdapter() {
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				nameTxt.setText("");
+			}
+		});
+		
 		addGroup.add(nameTxt);
 		// 취소 버튼
 		JButton backButton;
@@ -115,7 +127,6 @@ public class GroupManage extends JFrame {
 					}
 					dispose();
 				}
-
 			});
 		}
 
