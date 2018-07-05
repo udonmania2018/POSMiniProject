@@ -40,7 +40,7 @@ public class Payment extends JPanel {
 		table.setBounds(20, 20, 560, 70);
 		table.setRowHeight(70);
 		table.setFont(new Font("¸¼Àº °íµñ", Font.PLAIN, 25));
-		table.enable(false);
+		table.enable(false);		// deprecated. ¼öÁ¤ ÇÊ¿ä.
 				
 		// to do add scrollpanel
 		scrollPane = new JScrollPane(table);
