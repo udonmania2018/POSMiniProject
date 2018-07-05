@@ -109,8 +109,11 @@ public class GroupManage extends JFrame {
 						// 제품 분류 DB에 추가 처리 기능
 						ProductGroup pg = new ProductGroup((codTxt.getText()),nameTxt.getText());
 						dao.addProductGroup(pg);
+						dispose();
 					}
 				});
+			} else if (groupCheck.equals("manufacturer")){
+				
 			}
 		
 			
