@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import model.vo.EventGroup;
 
 // 이벤트 테스트 클래스. 주석 수정.
-// 코드를 작성할 때에는 반드시 주석을 달아 주세요.
+// 코드를 작성할 때에는 반드시 주석을 달아 주세요. master에 commit하면 안됩니다.
 public class Event {
 	public void addEventGroup(EventGroup eg) {
 		// 폴더가 있는지
