@@ -16,6 +16,7 @@ import model.vo.EventGroup;
 // 코드를 작성할 때에는 반드시 주석을 달아 주세요. master에 commit하면 안됩니다.
 // 자신만의 branch를 만들어서 사용해 보세요.
 // 아마도...
+// yeah ee 
 public class Event {
 	public void addEventGroup(EventGroup eg) {
 		// 폴더가 있는지
