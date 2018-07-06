@@ -11,112 +11,103 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 import model.vo.EventGroup;
+import model.vo.ProductGroup;
 
-// ÀÌº¥Æ® Å×½ºÆ® Å¬·¡½º. ÁÖ¼® ¼öÁ¤.
-// ÄÚµå¸¦ ÀÛ¼ºÇÒ ¶§¿¡´Â ¹İµå½Ã ÁÖ¼®À» ´Ş¾Æ ÁÖ¼¼¿ä. master¿¡ commitÇÏ¸é ¾ÈµË´Ï´Ù.
-// ÀÚ½Å¸¸ÀÇ branch¸¦ ¸¸µé¾î¼­ »ç¿ëÇØ º¸¼¼¿ä.
-// ¾Æ¸¶µµ...
-// yeah ee 
 public class Event {
 	public void addEventGroup(EventGroup eg) {
-		// Æú´õ°¡ ÀÖ´ÂÁö
-		File checkdir = new File("C:\\POSDB");
-		if (!checkdir.exists()) {
-			checkdir.mkdirs();
+		File eventdir = new File("C:\\POSDB");
+
+		if (!eventdir.exists()) {
+			eventdir.mkdirs();
 		}
-  
-		
-		
-		// ±âÁ¸ÀÇ µ¥ÀÌÅÍ°ª ºÒ·¯¿À±â
-		ArrayList<EventGroup> orignData = selectEventGroup();
-		if (orignData == null) {
-			// ±âÁ¸ µ¥ÀÌÅÍ°¡ ¾øÀ» °æ¿ì
-			orignData = new ArrayList<EventGroup>();
+
+		ArrayList<EventGroup> eventorignData = selectEventGroup();
+
+		if (eventorignData == null) {
+
+			eventorignData = new ArrayList<EventGroup>();
+
 		} else {
-			// ±âÁ¸ÀÇ µ¥ÀÌÅÍ°¡ ÀÖÀ» °æ¿ì
-			orignData.add(eg);
+
+			eventorignData.add(eg);
 		}
 		try (ObjectOutputStream oos = new ObjectOutputStream(
-				new FileOutputStream(checkdir.getPath() + "\\eventGroup.dat"))) {
-			// °´Ã¼ ÀúÀå
-			for (int i = 0; i < orignData.size(); i++) {
-				oos.writeObject(orignData.get(i));
+				new FileOutputStream(eventdir.getPath() + "\\EventGroup.dat"))) {
+
+			for (int i = 0; i < eventorignData.size(); i++) {
+				oos.writeObject(eventorignData.get(i));
 			}
 			oos.flush();
 
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
+
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	public ArrayList<EventGroup> selectEventGroup() {
-		// ÀĞ¾î¿Â µ¥ÀÌÅÍ¸¦ ÀúÀåÇÒ ÄÃ·º¼Ç ¼±¾ğ
+	private ArrayList<EventGroup> selectEventGroup() {
 		ArrayList<EventGroup> list = new ArrayList<EventGroup>();
-
-		// Æú´õ°¡ ÀÖ´ÂÁö È®ÀÎ
-		File checkdir = new File("C:\\POSDB");
-		if (!checkdir.exists()) {
-			checkdir.mkdirs();
+		File eventdir = new File("C:\\POSDB");
+		if (!eventdir.exists()) {
+			eventdir.mkdirs();
 		}
 
-		// ÆÄÀÏ ÀĞ¾î¿À±â
+		// íŒŒì¼ ì½ì–´ì˜¤ê¸°
 		try (ObjectInputStream ois = new ObjectInputStream(
-				new FileInputStream(checkdir.getPath() + "\\eventGroup.dat"))) {
-			// ÀĞ¾î¿Â ÆÄÀÏÀÇ Á¤º¸¸¦ ´ãÀ» ÀÓ½Ã ProductGroup °´Ã¼ temp¸¦ null·Î ÃÊ±âÈ­
+				new FileInputStream(eventdir.getPath() + "\\EventGroup.dat"))) {
+
 			EventGroup temp = null;
 			while (true) {
-				// ÀĞ¾î¿Â ÆÄÀÏÀÇ Á¤º¸¸¦ ÀÓ½Ã ÀúÀå¼Ò °´Ã¼ÀÎ temp¿¡ ÀúÀå
+
 				temp = (EventGroup) ois.readObject();
-				// ÀúÀåµÈ temp°´Ã¼¸¦ ÄÃ·º¼Ç¿¡ Ãß°¡
+
 				list.add(temp);
 			}
 
 		} catch (EOFException e) {
-			System.out.println("µ¥ÀÌÅÍ ·Îµå ¼º°ø...");
+			System.out.println("ë°ì´í„° ë¡œë“œ ì„±ê³µ");
 		} catch (FileNotFoundException e) {
-			// µ¥ÀÌÅÍ ÀúÀåÀÌ Ã³À½ÀÏ °æ¿ì Ã³¸®
+
 			return null;
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 
 		return list;
 	}
-	
-	public String getProudctGroupCode() {
-		
+	public String getEventGroupCode() {
+
 		int cnt = 1;
-		
+
 		try(ObjectInputStream ois = new ObjectInputStream(
-				new FileInputStream("C:\\POSDB\\eventGroup.dat"))){
-			
+				new FileInputStream("C:\\POSDB\\EventGroup.dat"))){
+
 			while(ois.read() != -1){
 				cnt++;
 			}
-			
+
 		} catch (FileNotFoundException e) {
 			return "001";
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
-		
-		String code = null;;
+
+		String code = null;
 		if(cnt< 10){
 			code = "00"+cnt;
 		} else if ( cnt < 100){
 			code = "0"+cnt;
 		}
-		
+
 		return code;
 	}
 }

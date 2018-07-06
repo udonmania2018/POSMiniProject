@@ -83,22 +83,22 @@ public class ProductMain extends JPanel {
 		lblNewLabel_1.setBounds(70, 130, 170, 40);
 		add(lblNewLabel_1);
 
-		JLabel label = new JLabel("\uC0C1\uD488\uCF54\uB4DC");
+		JLabel label = new JLabel("\uBC1C\uC8FC\uAC00\uACA9");
 		label.setFont(new Font("«‘√ ∑“µ∏øÚ", Font.BOLD, 20));
 		label.setHorizontalAlignment(SwingConstants.CENTER);
-		label.setBounds(70, 180, 170, 40);
+		label.setBounds(70, 232, 170, 40);
 		add(label);
 
 		JLabel lblNewLabel_2 = new JLabel("\uC81C\uC870\uD68C\uC0AC");
 		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_2.setFont(new Font("«‘√ ∑“µ∏øÚ", Font.BOLD, 20));
-		lblNewLabel_2.setBounds(70, 230, 170, 40);
+		lblNewLabel_2.setBounds(70, 182, 170, 40);
 		add(lblNewLabel_2);
 
 		JLabel lblNewLabel_3 = new JLabel("\uC0C1\uD488\uAC00\uACA9");
 		lblNewLabel_3.setFont(new Font("«‘√ ∑“µ∏øÚ", Font.BOLD, 20));
 		lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_3.setBounds(70, 280, 170, 40);
+		lblNewLabel_3.setBounds(70, 282, 170, 40);
 		add(lblNewLabel_3);
 
 		JLabel lblNewLabel_4 = new JLabel("\uC0C1\uD488\uBA85");
@@ -114,7 +114,7 @@ public class ProductMain extends JPanel {
 		add(lblNewLabel_5);
 
 		textField_1 = new JTextField();
-		textField_1.setBounds(300, 185, 200, 40);
+		textField_1.setBounds(300, 232, 200, 40);
 		add(textField_1);
 		textField_1.setColumns(10);
 
@@ -129,7 +129,7 @@ public class ProductMain extends JPanel {
 		textField_4.setColumns(10);
 
 		textField_5 = new JTextField();
-		textField_5.setBounds(300, 385, 200, 40);
+		textField_5.setBounds(400, 385, 100, 40);
 		add(textField_5);
 		textField_5.setColumns(10);
 
@@ -151,7 +151,7 @@ public class ProductMain extends JPanel {
 		JComboBox comboBox = new JComboBox();
 		comboBox.setBackground(UIManager.getColor("Table.sortIconLight"));
 		comboBox.setModel(new DefaultComboBoxModel(new String[] { "\uB86F\uB370", "\uB18D\uC2EC", "\uC0BC\uC591" }));
-		comboBox.setBounds(300, 234, 200, 40);
+		comboBox.setBounds(300, 184, 200, 40);
 		add(comboBox);
 
 		JButton plusButton = new JButton(new ImageIcon("images/buttonsImages/PLUS.png"));
@@ -190,7 +190,7 @@ public class ProductMain extends JPanel {
 
 		JButton plusButton2 = new JButton(new ImageIcon("images/buttonsImages/PLUS.png"));
 		plusButton2.setFont(new Font("±º∏≤", Font.PLAIN, 10));
-		plusButton2.setBounds(506, 238, 27, 27);
+		plusButton2.setBounds(506, 195, 27, 27);
 		plusButton2.setBorderPainted(false);
 		plusButton2.addActionListener(new ActionListener() {
 			@Override
@@ -206,7 +206,7 @@ public class ProductMain extends JPanel {
 
 		JButton minusButton2 = new JButton(new ImageIcon("images/buttonsImages/MINUS.png"));
 		minusButton2.setFont(new Font("±º∏≤", Font.PLAIN, 10));
-		minusButton2.setBounds(540, 238, 27, 27);
+		minusButton2.setBounds(540, 195, 27, 27);
 		minusButton2.setBorderPainted(false);
 		minusButton2.addActionListener(new ActionListener() {
 
@@ -220,6 +220,11 @@ public class ProductMain extends JPanel {
 			}
 		});
 		add(minusButton2);
+		
+		JComboBox comboBox_Date = new JComboBox();
+		comboBox_Date.setModel(new DefaultComboBoxModel(new String[] {"\uB144/\uC6D4", "\uC6D4/\uC77C"}));
+		comboBox_Date.setBounds(300, 385, 88, 42);
+		add(comboBox_Date);
 
 		JButton[] buttons = { plusButton, minusButton, plusButton2, minusButton2 };
 		ComponentSettings.imageButtonSetting(buttons);

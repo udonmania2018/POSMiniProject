@@ -19,6 +19,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import dao.tmsDao.Event;
+import model.vo.EventGroup;
 import view.totalManageSystem.management.ManagementSystem;
 import view.totalManageSystem.popUp.ControllPanel;
 import view.totalManageSystem.popUp.MainFrame;
@@ -30,6 +32,7 @@ public class EventMain extends JPanel {
 	private JTextField txtTextfield_3;
 	private JTextField textField;
 
+	private Event eventdao = new Event();
 	/**
 	 * Create the panel.
 	 */
@@ -166,6 +169,16 @@ public class EventMain extends JPanel {
 		btnNewButton_1.setBorderPainted(false);
 		btnNewButton_1.setBounds(150, 470, 100, 40);
 		add(btnNewButton_1);
+		
+		btnNewButton_1.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				EventGroup eg = new EventGroup(txtTextfield.getText(),txtTextfield_1.getText() ,txtTextfield_2.getText() ,txtTextfield_3.getText() );
+				eventdao.addEventGroup(eg);
+				
+			}
+		});
 		
 		JButton btnNewButton_2 = new JButton(new ImageIcon("images/buttonsImages/CANCEL_ICON.PNG"));
 		btnNewButton_2.addMouseListener(new MouseAdapter(){
