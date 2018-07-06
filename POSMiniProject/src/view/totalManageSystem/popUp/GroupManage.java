@@ -42,41 +42,41 @@ public class GroupManage extends JFrame {
 			}
 		});
 
-		// ì œí’ˆ ë¶„ë¥˜ ì½”ë“œ
+		// Á¦Ç° ºĞ·ù ÄÚµå
 		JTextPane code = new JTextPane();
-		code.setFont(new Font("ë§‘ì€ ê³ ë”•", Font.BOLD, 28));
+		code.setFont(new Font("¸¼Àº °íµñ", Font.BOLD, 28));
 		String group = null;
 
 		code.setBounds(58, 35, 300, 44);
 		code.setEditable(false);
 		addGroup.add(code);
 
-		// ì½”ë“œ ì…ë ¥
-		codTxt = new JTextField("ë‚´ìš©ì„ ì…ë ¥í•´ì£¼ì„¸ìš”.");
+		// ÄÚµå ÀÔ·Â
+		codTxt = new JTextField("³»¿ëÀ» ÀÔ·ÂÇØÁÖ¼¼¿ä.");
 		codTxt.setBounds(58, 80, 264, 44);
 		codTxt.setEditable(false);
 		addGroup.add(codTxt);
 		codTxt.setColumns(10);
 
 		if (groupCheck.equals("product")) {
-			group = "ì œí’ˆ ë¶„ë¥˜";
+			group = "Á¦Ç° ºĞ·ù";
 			codTxt.setText(dao.getProudctGroupCode());
 		} else if (groupCheck.equals("manufacturer")) {
-			group = "ì œì¡°íšŒì‚¬ ë¶„ë¥˜";
+			group = "Á¦Á¶È¸»ç ºĞ·ù";
 		} else if (groupCheck.equals("eventGroup")) {
-			group = "ì´ë²¤íŠ¸ ë¶„ë¥˜";
+			group = "ÀÌº¥Æ® ºĞ·ù";
 		}
-		code.setText(group + " ì½”ë“œ");
-		// ì œí’ˆ ë¶„ë¥˜ëª…
+		code.setText(group + " ÄÚµå");
+		// Á¦Ç° ºĞ·ù¸í
 		JTextPane name = new JTextPane();
-		name.setText(group + "ëª…");
-		name.setFont(new Font("ë§‘ì€ ê³ ë”•", Font.BOLD, 28));
+		name.setText(group + "¸í");
+		name.setFont(new Font("¸¼Àº °íµñ", Font.BOLD, 28));
 		name.setBounds(58, 148, 300, 44);
 		name.setEditable(false);
 		addGroup.add(name);
 
-		// ë¶„ë¥˜ëª… ì…ë ¥
-		nameTxt = new JTextField("ë‚´ìš©ì„ ì…ë ¥í•´ì£¼ì„¸ìš”.");
+		// ºĞ·ù¸í ÀÔ·Â
+		nameTxt = new JTextField("³»¿ëÀ» ÀÔ·ÂÇØÁÖ¼¼¿ä.");
 		nameTxt.setColumns(10);
 		nameTxt.setBounds(58, 192, 264, 44);
 		
@@ -91,27 +91,27 @@ public class GroupManage extends JFrame {
 		
 		
 		addGroup.add(nameTxt);
-		// ì·¨ì†Œ ë²„íŠ¼
+		// Ãë¼Ò ¹öÆ°
 		JButton backButton;
 		backButton = new JButton(new ImageIcon("images/buttonsImages/CANCEL_ICON.PNG"));
-		backButton.setBorderPainted(false); // ë²„íŠ¼ í…Œë‘ë¦¬ ì„¤ì •í•´ì œ
+		backButton.setBorderPainted(false); // ¹öÆ° Å×µÎ¸® ¼³Á¤ÇØÁ¦
 
-		// ë²„íŠ¼ ì´ë²¤íŠ¸ êµ¬í˜„ì‹œ groupCheck ê°’ì— ë”°ë¼
-		// êµ¬ë¶„í•´ì„œ DB ì‹¤í–‰
-		if (check) {// ì¶”ê°€ ë²„íŠ¼
+		// ¹öÆ° ÀÌº¥Æ® ±¸Çö½Ã groupCheck °ª¿¡ µû¶ó
+		// ±¸ºĞÇØ¼­ DB ½ÇÇà
+		if (check) {// Ãß°¡ ¹öÆ°
 			JButton addButton;
 			addButton = new JButton(new ImageIcon("images/buttonsImages/ADD_ICON.PNG"));
-			addButton.setBorderPainted(false); // ë²„íŠ¼ í…Œë‘ë¦¬ ì„¤ì •í•´ì œ
-			addButton.setBounds(50, 273, 100, 40); // ë²„íŠ¼ í¬ê¸° ì§€ì •
+			addButton.setBorderPainted(false); // ¹öÆ° Å×µÎ¸® ¼³Á¤ÇØÁ¦
+			addButton.setBounds(50, 273, 100, 40); // ¹öÆ° Å©±â ÁöÁ¤
 			addGroup.add(addButton);
 
-			backButton.setBounds(192, 273, 100, 40); // ë²„íŠ¼ í¬ê¸° ì§€ì •
+			backButton.setBounds(192, 273, 100, 40); // ¹öÆ° Å©±â ÁöÁ¤
 			addGroup.add(backButton);
 
 			addButton.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					// ì œí’ˆ ë¶„ë¥˜ DBì— ì¶”ê°€ ì²˜ë¦¬ ê¸°ëŠ¥
+					// Á¦Ç° ºĞ·ù DB¿¡ Ãß°¡ Ã³¸® ±â´É
 
 					if (groupCheck.equals("product")) {
 						ProductGroup pg = new ProductGroup((codTxt.getText()), nameTxt.getText());
@@ -129,15 +129,15 @@ public class GroupManage extends JFrame {
 		} else {
 			JButton modifyBtn;
 			modifyBtn = new JButton(new ImageIcon("images/buttonsImages/MODIFY_ICON.PNG"));
-			modifyBtn.setBorderPainted(false); // ë²„íŠ¼ í…Œë‘ë¦¬ ì„¤ì •í•´ì œ
-			modifyBtn.setBounds(20, 270, 100, 40); // ë²„íŠ¼ í¬ê¸° ì§€ì •
+			modifyBtn.setBorderPainted(false); // ¹öÆ° Å×µÎ¸® ¼³Á¤ÇØÁ¦
+			modifyBtn.setBounds(20, 270, 100, 40); // ¹öÆ° Å©±â ÁöÁ¤
 			addGroup.add(modifyBtn);
 
-			// ì·¨ì†Œ ë²„íŠ¼
+			// Ãë¼Ò ¹öÆ°
 			JButton deleteBtn;
 			deleteBtn = new JButton(new ImageIcon("images/buttonsImages/DELETE_ICON.PNG"));
-			deleteBtn.setBorderPainted(false); // ë²„íŠ¼ í…Œë‘ë¦¬ ì„¤ì •í•´ì œ
-			deleteBtn.setBounds(140, 270, 100, 40); // ë²„íŠ¼ í¬ê¸° ì§€ì •
+			deleteBtn.setBorderPainted(false); // ¹öÆ° Å×µÎ¸® ¼³Á¤ÇØÁ¦
+			deleteBtn.setBounds(140, 270, 100, 40); // ¹öÆ° Å©±â ÁöÁ¤
 			addGroup.add(deleteBtn);
 
 			backButton.setBounds(260, 270, 100, 40);

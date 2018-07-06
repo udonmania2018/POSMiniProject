@@ -78,7 +78,7 @@ public class Payment extends JPanel {
 		pointBtn.setOpaque(false);
 		pointBtn.setVerticalTextPosition(SwingConstants.CENTER);
 		pointBtn.setHorizontalTextPosition(SwingConstants.CENTER);
-		pointBtn.setIcon(new ImageIcon("ICONPACK/POINT_ICON.PNG"));
+		pointBtn.setIcon(new ImageIcon("images/buttonsImages/POINT_ICON.PNG"));
 		this.add(pointBtn);
 		
 		// 카드 결제 버튼
@@ -89,7 +89,7 @@ public class Payment extends JPanel {
 		cardBtn.setOpaque(false);
 		cardBtn.setVerticalTextPosition(SwingConstants.CENTER);
 		cardBtn.setHorizontalTextPosition(SwingConstants.CENTER);
-		cardBtn.setIcon(new ImageIcon("ICONPACK/CARDPAY_ICON.PNG"));
+		cardBtn.setIcon(new ImageIcon("images/buttonsImages/CARDPAY_ICON.PNG"));
 		this.add(cardBtn);
 		
 		// 현금 결제 버튼
@@ -100,7 +100,7 @@ public class Payment extends JPanel {
 		cashBtn.setOpaque(false);
 		cashBtn.setVerticalTextPosition(SwingConstants.CENTER);
 		cashBtn.setHorizontalTextPosition(SwingConstants.CENTER);
-		cashBtn.setIcon(new ImageIcon("ICONPACK/CASHPAY_ICON.PNG"));
+		cashBtn.setIcon(new ImageIcon("images/buttonsImages/CASHPAY_ICON.PNG"));
 		this.add(cashBtn);
 		
 		// 취소 버튼
@@ -111,7 +111,7 @@ public class Payment extends JPanel {
 		cancelBtn.setOpaque(false);
 		cancelBtn.setVerticalTextPosition(SwingConstants.CENTER);
 		cancelBtn.setHorizontalTextPosition(SwingConstants.CENTER);
-		cancelBtn.setIcon(new ImageIcon("ICONPACK/CANCEL_ICON.PNG"));
+		cancelBtn.setIcon(new ImageIcon("images/buttonsImages/CANCEL_ICON.PNG"));
 		this.add(cancelBtn);
 		
 

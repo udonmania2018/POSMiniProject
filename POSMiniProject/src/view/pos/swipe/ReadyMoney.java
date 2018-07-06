@@ -28,16 +28,16 @@ public class ReadyMoney extends JPanel {
 		this.setLayout(null);
 		this.setBackground(Color.WHITE);
 
-		JLabel lblNewLabel_1 = new JLabel("ì‹œ ì¬ í™• ì¸");
-		lblNewLabel_1.setFont(new Font("ë§‘ì€ ê³ ë”•", Font.BOLD, 28));
+		JLabel lblNewLabel_1 = new JLabel("½Ã Àç È® ÀÎ");
+		lblNewLabel_1.setFont(new Font("¸¼Àº °íµñ", Font.BOLD, 28));
 		lblNewLabel_1.setBounds(35, 25, 222, 60);
 		add(lblNewLabel_1);
 
 		userColumn = new Vector<String>();
 
-		userColumn.addElement("ê¶Œì¢…");
-		userColumn.addElement("ìˆ˜ëŸ‰");
-		userColumn.addElement("ê¸ˆì•¡");
+		userColumn.addElement("±ÇÁ¾");
+		userColumn.addElement("¼ö·®");
+		userColumn.addElement("±İ¾×");
 
 		model = new DefaultTableModel(userColumn, 8){
 			@Override
@@ -67,8 +67,8 @@ public class ReadyMoney extends JPanel {
 		model.setValueAt("50", 6, 0);
 		model.setValueAt("50", 7, 0);
 	
-		JLabel lblNewLabel_2 = new JLabel("ì‹¤í˜„ê¸ˆ");
-		lblNewLabel_2.setFont(new Font("ë§‘ì€ ê³ ë”•", Font.BOLD, 17));
+		JLabel lblNewLabel_2 = new JLabel("½ÇÇö±İ");
+		lblNewLabel_2.setFont(new Font("¸¼Àº °íµñ", Font.BOLD, 17));
 		lblNewLabel_2.setBounds(60, 300, 80, 40);
 		add(lblNewLabel_2);
 
@@ -81,8 +81,8 @@ public class ReadyMoney extends JPanel {
 		btnNewButton.setBounds(482, 37, 100, 40);
 		add(btnNewButton);
 
-		JLabel lblNewLabel_3 = new JLabel("ì˜ ìˆ˜ ì¦");
-		lblNewLabel_3.setFont(new Font("ë§‘ì€ ê³ ë”•", Font.BOLD, 28));
+		JLabel lblNewLabel_3 = new JLabel("¿µ ¼ö Áõ");
+		lblNewLabel_3.setFont(new Font("¸¼Àº °íµñ", Font.BOLD, 28));
 		lblNewLabel_3.setBounds(648, 37, 148, 47);
 		add(lblNewLabel_3);
 
@@ -92,7 +92,7 @@ public class ReadyMoney extends JPanel {
 
 		txtKh = new JTextField();
 		txtKh.setEditable(true);
-		txtKh.setText("KHí¸ì˜ì (ì—­ì‚¼ì ) ë°œí–‰ì¼ : í˜„ì¬ë‚ ì§œ \n\t ì‹œì¬ í™•ì¸ ");
+		txtKh.setText("KHÆíÀÇÁ¡(¿ª»ïÁ¡) ¹ßÇàÀÏ : ÇöÀç³¯Â¥ \n\t ½ÃÀç È®ÀÎ ");
 		scrollPane.add(txtKh);
 		txtKh.setColumns(2);
 
