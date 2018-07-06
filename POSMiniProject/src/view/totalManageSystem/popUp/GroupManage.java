@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -17,7 +19,6 @@ import javax.swing.JTextPane;
 import dao.tmsDao.Event;
 import dao.tmsDao.Product;
 import model.vo.EventGroup;
-import model.vo.ProductGroup;
 
 public class GroupManage extends JFrame {
 
@@ -25,7 +26,8 @@ public class GroupManage extends JFrame {
 	private JTextField codTxt;
 	private JTextField nameTxt;
 	private Product dao = new Product();
-	public GroupManage(String groupCheck,boolean check) {
+
+	public GroupManage(String groupCheck, boolean check) {
 		this.setBounds(100, 100, 380, 380);
 		addGroup = new JPanel();
 		addGroup.setBackground(Color.WHITE);
@@ -39,72 +41,84 @@ public class GroupManage extends JFrame {
 				MainFrame.popUpMainFrameCheck = true;
 			}
 		});
-		
-		
-		// Á¦Ç° ºĞ·ù ÄÚµå
+
+		// ì œí’ˆ ë¶„ë¥˜ ì½”ë“œ
 		JTextPane code = new JTextPane();
-		code.setFont(new Font("¸¼Àº °íµñ", Font.BOLD, 28));
+		code.setFont(new Font("ë§‘ì€ ê³ ë”•", Font.BOLD, 28));
 		String group = null;
-		
-		
+
 		code.setBounds(58, 35, 300, 44);
 		code.setEditable(false);
 		addGroup.add(code);
 
-		// ÄÚµå ÀÔ·Â
-		codTxt = new JTextField("³»¿ëÀ» ÀÔ·ÂÇØÁÖ¼¼¿ä.");
+		// ì½”ë“œ ì…ë ¥
+		codTxt = new JTextField("ë‚´ìš©ì„ ì…ë ¥í•´ì£¼ì„¸ìš”.");
 		codTxt.setBounds(58, 80, 264, 44);
 		codTxt.setEditable(false);
 		addGroup.add(codTxt);
 		codTxt.setColumns(10);
-		
-		if(groupCheck.equals("product")){
-			group ="Á¦Ç° ºĞ·ù";
+
+		if (groupCheck.equals("product")) {
+			group = "ì œí’ˆ ë¶„ë¥˜";
 			codTxt.setText(dao.getProudctGroupCode());
-		} else if(groupCheck.equals("manufacturer")){
-			group ="Á¦Á¶È¸»ç ºĞ·ù";
-		} else if(groupCheck.equals("eventGroup")){
-			group ="ÀÌº¥Æ® ºĞ·ù";
+		} else if (groupCheck.equals("manufacturer")) {
+			group = "ì œì¡°íšŒì‚¬ ë¶„ë¥˜";
+		} else if (groupCheck.equals("eventGroup")) {
+			group = "ì´ë²¤íŠ¸ ë¶„ë¥˜";
 		}
-		code.setText(group+" ÄÚµå");
-		// Á¦Ç° ºĞ·ù¸í
+		code.setText(group + " ì½”ë“œ");
+		// ì œí’ˆ ë¶„ë¥˜ëª…
 		JTextPane name = new JTextPane();
-		name.setText(group+"¸í");
-		name.setFont(new Font("¸¼Àº °íµñ", Font.BOLD, 28));
+		name.setText(group + "ëª…");
+		name.setFont(new Font("ë§‘ì€ ê³ ë”•", Font.BOLD, 28));
 		name.setBounds(58, 148, 300, 44);
 		name.setEditable(false);
 		addGroup.add(name);
 
-		// ºĞ·ù¸í ÀÔ·Â
-		nameTxt = new JTextField("³»¿ëÀ» ÀÔ·ÂÇØÁÖ¼¼¿ä.");
+		// ë¶„ë¥˜ëª… ì…ë ¥
+		nameTxt = new JTextField("ë‚´ìš©ì„ ì…ë ¥í•´ì£¼ì„¸ìš”.");
 		nameTxt.setColumns(10);
 		nameTxt.setBounds(58, 192, 264, 44);
+		
+		nameTxt.addMouseListener(new MouseAdapter() {
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				nameTxt.setText("");
+			}
+		});
+		
+		
 		addGroup.add(nameTxt);
-		// Ãë¼Ò ¹öÆ°
+		// ì·¨ì†Œ ë²„íŠ¼
 		JButton backButton;
 		backButton = new JButton(new ImageIcon("images/buttonsImages/CANCEL_ICON.PNG"));
-		backButton.setBorderPainted(false); // ¹öÆ° Å×µÎ¸® ¼³Á¤ÇØÁ¦
+		backButton.setBorderPainted(false); // ë²„íŠ¼ í…Œë‘ë¦¬ ì„¤ì •í•´ì œ
 
-		
-		// ¹öÆ° ÀÌº¥Æ® ±¸Çö½Ã groupCheck °ª¿¡ µû¶ó 
-		// ±¸ºĞÇØ¼­ DB ½ÇÇà
-		if (check) {// Ãß°¡ ¹öÆ°
+		// ë²„íŠ¼ ì´ë²¤íŠ¸ êµ¬í˜„ì‹œ groupCheck ê°’ì— ë”°ë¼
+		// êµ¬ë¶„í•´ì„œ DB ì‹¤í–‰
+		if (check) {// ì¶”ê°€ ë²„íŠ¼
 			JButton addButton;
 			addButton = new JButton(new ImageIcon("images/buttonsImages/ADD_ICON.PNG"));
-			addButton.setBorderPainted(false); // ¹öÆ° Å×µÎ¸® ¼³Á¤ÇØÁ¦
-			addButton.setBounds(50, 273, 100, 40); // ¹öÆ° Å©±â ÁöÁ¤
+			addButton.setBorderPainted(false); // ë²„íŠ¼ í…Œë‘ë¦¬ ì„¤ì •í•´ì œ
+			addButton.setBounds(50, 273, 100, 40); // ë²„íŠ¼ í¬ê¸° ì§€ì •
 			addGroup.add(addButton);
 
-			backButton.setBounds(192, 273, 100, 40); // ¹öÆ° Å©±â ÁöÁ¤
+			backButton.setBounds(192, 273, 100, 40); // ë²„íŠ¼ í¬ê¸° ì§€ì •
 			addGroup.add(backButton);
-			
-			if(groupCheck.equals("product")){
-				addButton.addActionListener(new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						// Á¦Ç° ºĞ·ù DB¿¡ Ãß°¡ Ã³¸® ±â´É
-						ProductGroup pg = new ProductGroup((codTxt.getText()),nameTxt.getText());
+
+			addButton.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// ì œí’ˆ ë¶„ë¥˜ DBì— ì¶”ê°€ ì²˜ë¦¬ ê¸°ëŠ¥
+
+					if (groupCheck.equals("product")) {
+						ProductGroup pg = new ProductGroup((codTxt.getText()), nameTxt.getText());
 						dao.addProductGroup(pg);
+					} else if (groupCheck.equals("manufacturer")) {
+						ManufactureGroup mfg = new ManufactureGroup(codTxt.getText(), nameTxt.getText());
+						dao.addManufacturer(mfg);
 					}
 				});
 			}
@@ -115,24 +129,24 @@ public class GroupManage extends JFrame {
 		} else {
 			JButton modifyBtn;
 			modifyBtn = new JButton(new ImageIcon("images/buttonsImages/MODIFY_ICON.PNG"));
-			modifyBtn.setBorderPainted(false); // ¹öÆ° Å×µÎ¸® ¼³Á¤ÇØÁ¦
-			modifyBtn.setBounds(20, 270, 100, 40); // ¹öÆ° Å©±â ÁöÁ¤
+			modifyBtn.setBorderPainted(false); // ë²„íŠ¼ í…Œë‘ë¦¬ ì„¤ì •í•´ì œ
+			modifyBtn.setBounds(20, 270, 100, 40); // ë²„íŠ¼ í¬ê¸° ì§€ì •
 			addGroup.add(modifyBtn);
 
-			// Ãë¼Ò ¹öÆ°
+			// ì·¨ì†Œ ë²„íŠ¼
 			JButton deleteBtn;
 			deleteBtn = new JButton(new ImageIcon("images/buttonsImages/DELETE_ICON.PNG"));
-			deleteBtn.setBorderPainted(false); // ¹öÆ° Å×µÎ¸® ¼³Á¤ÇØÁ¦
-			deleteBtn.setBounds(140, 270, 100, 40); // ¹öÆ° Å©±â ÁöÁ¤
+			deleteBtn.setBorderPainted(false); // ë²„íŠ¼ í…Œë‘ë¦¬ ì„¤ì •í•´ì œ
+			deleteBtn.setBounds(140, 270, 100, 40); // ë²„íŠ¼ í¬ê¸° ì§€ì •
 			addGroup.add(deleteBtn);
-			
+
 			backButton.setBounds(260, 270, 100, 40);
 			addGroup.add(backButton);
 
 		}
 		JFrame temp = this;
 		backButton.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
@@ -140,7 +154,7 @@ public class GroupManage extends JFrame {
 				MainFrame.popUpMainFrameCheck = true;
 			}
 		});
-		
+
 		getContentPane().add(addGroup);
 		this.setResizable(false);
 		this.setVisible(true);

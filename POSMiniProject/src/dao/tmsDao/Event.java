@@ -26,6 +26,7 @@ public class Event {
 		if (eventorignData == null) {
 
 			eventorignData = new ArrayList<EventGroup>();
+
 		} else {
 
 			eventorignData.add(eg);
@@ -55,7 +56,7 @@ public class Event {
 			eventdir.mkdirs();
 		}
 
-		// ÆÄÀÏ ÀĞ¾î¿À±â
+		// íŒŒì¼ ì½ì–´ì˜¤ê¸°
 		try (ObjectInputStream ois = new ObjectInputStream(
 				new FileInputStream(eventdir.getPath() + "\\EventGroup.dat"))) {
 
@@ -68,7 +69,7 @@ public class Event {
 			}
 
 		} catch (EOFException e) {
-			System.out.println("µ¥ÀÌÅÍ ·Îµå ¼º°ø");
+			System.out.println("ë°ì´í„° ë¡œë“œ ì„±ê³µ");
 		} catch (FileNotFoundException e) {
 
 			return null;
