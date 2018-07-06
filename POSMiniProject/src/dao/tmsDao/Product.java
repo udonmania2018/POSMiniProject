@@ -16,7 +16,7 @@ import model.vo.ProductGroup;
 public class Product {
 	File checkdir;
 	public Product() {
-		// 폴더가 있는지
+		// 폴더가 있는가?
 		checkdir = new File("C:\\POSDB");
 		if (!checkdir.exists()) {
 			checkdir.mkdirs();
