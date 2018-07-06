@@ -16,9 +16,9 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 
-import dao.tmsDao.Event;
 import dao.tmsDao.Product;
-import model.vo.EventGroup;
+import model.vo.ManufactureGroup;
+import model.vo.ProductGroup;
 
 public class GroupManage extends JFrame {
 
@@ -120,13 +120,10 @@ public class GroupManage extends JFrame {
 						ManufactureGroup mfg = new ManufactureGroup(codTxt.getText(), nameTxt.getText());
 						dao.addManufacturer(mfg);
 					}
+					dispose();
+				}
 				});
-			}
-
-						
-				
-			
-		} else {
+			} else {
 			JButton modifyBtn;
 			modifyBtn = new JButton(new ImageIcon("images/buttonsImages/MODIFY_ICON.PNG"));
 			modifyBtn.setBorderPainted(false); // 버튼 테두리 설정해제
