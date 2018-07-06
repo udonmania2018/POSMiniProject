@@ -3,7 +3,7 @@ package model.vo;
 import java.io.Serializable;
 
 public class ManufactureGroup implements Serializable{
-
+	
 	private String manufactureGroupCode;
 	private String manufactureGroupName ;
 	

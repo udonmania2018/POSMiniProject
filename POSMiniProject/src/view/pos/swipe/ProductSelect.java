@@ -1,7 +1,5 @@
 package view.pos.swipe;
 
-import java.awt.BorderLayout;
-import java.awt.Checkbox;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
@@ -23,14 +21,14 @@ import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
-import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
+
+import view.ComponentSettings;
 
 public class ProductSelect extends JPanel {
 
@@ -47,18 +45,18 @@ public class ProductSelect extends JPanel {
 		setLayout(null);
 		setBounds(0, 0, 1199, 399);
 
-		// 저널 표시 테이블
-		// 테이블 임시 데이터
-		Object data[][] = { { "ㄹㄹㄹ", "ㄷㄷㄷ", "ㅇㅇㅇ", "ㅌㅌㅌ" }, { null, null, null, null }, { null, null, null, null },
-				{ null, null, null, null }, { null, null, null, null }, { null, null, null, null },
-				{ null, null, null, null } };
+		// 테이블 임시 데이터 반드시 비고값에 true로 초기화
+		Object data[][] = { { "ㄹㄹㄹ", "ㄷㄷㄷ", "ㅇㅇㅇ", "ㅌㅌㅌ", true }, { null, null, null, null, true },
+				{ null, null, null, null, true }, { null, null, null, null, true }, { null, null, null, null, true },
+				{ null, null, null, null, true }, { null, null, null, null, true } };
 		String colNames[] = { "제품분류", "제품명", "개수", "가격", "비고" };
 
+		// 테이블 컬럼 수정 여부 설정
 		DefaultTableModel dtm1 = new DefaultTableModel(data, colNames) {
 			@Override
 			public boolean isCellEditable(int row, int column) {
 				// TODO Auto-generated method stub
-				if (column == 4) {
+				if (column == 2 || column == 4) {
 					return true;
 				} else {
 					return false;
@@ -66,58 +64,99 @@ public class ProductSelect extends JPanel {
 			}
 		};
 
-		// 테이블 생성
-		check_table = new JTable(dtm1);
+		// ------------------- 왼쪽 상단 뷰 ------------------
+		JLabel label = new JLabel("\uC0C1\uD488\uC120\uD0DD");
+		label.setHorizontalAlignment(SwingConstants.CENTER);
+		label.setFont(new Font("맑은 고딕", Font.BOLD, 35));
+		label.setBounds(0, 24, 188, 63);
+		add(label);
 
+		JComboBox comboBox = new JComboBox();
+		comboBox.setModel(
+				new DefaultComboBoxModel(new String[] { "\uC81C\uD488 \uBA85", "\uC81C\uC870 \uD68C\uC0AC" }));
+		comboBox.setBounds(176, 39, 80, 36);
+		add(comboBox);
+
+		textField = new JTextField();
+		textField.setText("\uC785\uB825\uB780");
+		textField.setBounds(270, 39, 200, 36);
+		add(textField);
+		textField.setColumns(10);
+
+		JButton searchbtn = new JButton(new ImageIcon("images/buttonsImages/SEARCH.PNG"));
+		searchbtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+
+		JButton enterbtn = new JButton(new ImageIcon("images/buttonsImages/OK_ICON.PNG"));
+		enterbtn.setBounds(555, 39, 100, 40);
+		add(enterbtn);
+
+		searchbtn.setBounds(490, 39, 50, 40);
+		add(searchbtn);
+		// -------------------------------------------------------
+
+		// ----------------------- 왼쪽 테이블 생성 -------------------------
+		check_table = new JTable(dtm1);
 		check_table.setBorder(new LineBorder(new Color(0, 0, 0)));
-		check_table.getTableHeader().setFont(new Font("맑은 고딕", Font.PLAIN, 20));
-		check_table.setFont(new Font("맑은 고딕", Font.PLAIN, 26));
+		check_table.getTableHeader().setFont(new Font("맑은 고딕", Font.BOLD, 20));
+		check_table.setFont(new Font("맑은 고딕", Font.PLAIN, 16));
 		check_table.setBounds(0, 0, 750, 260);
-		check_table.getColumnModel().getColumn(0).setPreferredWidth(150);
-		check_table.getColumnModel().getColumn(1).setPreferredWidth(200);
-		check_table.getColumnModel().getColumn(2).setPreferredWidth(150);
+		check_table.getColumnModel().getColumn(0).setPreferredWidth(130);
+		check_table.getColumnModel().getColumn(1).setPreferredWidth(240);
+		check_table.getColumnModel().getColumn(2).setPreferredWidth(100);
 		check_table.getColumnModel().getColumn(3).setPreferredWidth(200);
 		check_table.getColumnModel().getColumn(4).setPreferredWidth(50);
 
-		JCheckBox[] checks = new JCheckBox[check_table.getRowCount()];
-
+		// JCheckBox[] checks = new JCheckBox[check_table.getRowCount()];
 		check_table.setRowHeight(37);
-		check_table.setBounds(0, 0, 626, 260);
+		check_table.setBounds(0, 0, 620, 260);
 
-		JScrollPane mainScrollPane = new JScrollPane();
-		mainScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
-		mainScrollPane.setBounds(29, 119, 626, 260);
-		int locate = 35;
-		for (int i = 0; i < checks.length; i++) {
-			checks[i] = new JCheckBox();
-			checks[i].setBounds(590, locate, 30, 30);
-			checks[i].setBackground(Color.WHITE);
-			locate += 37;
-			mainScrollPane.add(checks[i]);
-		}
 		// JScrollPane
-		JScrollPane check_scrollPane = new JScrollPane(check_table);
-		check_scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
-		check_scrollPane.setBounds(0, 0, 626, 260);
-		
-		mainScrollPane.add(check_scrollPane);
-		add(mainScrollPane, BorderLayout.CENTER);
+		// 체크 박스 생성하는 작업
+		DefaultTableCellRenderer dcr = new DefaultTableCellRenderer() {
+			@Override
+			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+					boolean hasFocus, int row, int column) {
+				// TODO Auto-generated method stub
+				JCheckBox box = new JCheckBox();
+				box.setSelected(((Boolean) value).booleanValue());
+				box.setHorizontalAlignment(JLabel.CENTER);
+				return box;
+			}
+		};
+		// 태이블에 체크 박스 넣을 수 있도록 설정
+		check_table.getColumn("비고").setCellRenderer(dcr);
 
-		// check_scrollPane.add(check_table);
-		/*
-		 * JSeparator separator = new JSeparator();
-		 * separator.setOrientation(SwingConstants.VERTICAL);
-		 * separator.setForeground(Color.DARK_GRAY);
-		 * separator.setBackground(Color.BLACK); separator.setBounds(677, 39,
-		 * 12, 350);
-		 * 
-		 * add(separator);
-		 */
+		// 테이블에 체크박스 추가
+		JCheckBox box = new JCheckBox();
+		box.setHorizontalAlignment(JLabel.CENTER);
+		check_table.getColumn("비고").setCellEditor(new DefaultCellEditor(box));
+		
+		JScrollPane check_scrollPane = new JScrollPane(check_table);
+		check_scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+		check_scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		check_scrollPane.setBounds(29, 119, 625, 260);
+		add(check_scrollPane);
+		// -------------------------------------------------------
+
+		// 중앙 분리선
+		JSeparator separator = new JSeparator();
+		separator.setOrientation(SwingConstants.VERTICAL);
+		separator.setForeground(Color.DARK_GRAY);
+		separator.setBackground(Color.BLACK);
+		separator.setBounds(675, 29, 12, 350);
+		add(separator);
+
+		// -------------------- 오른 쪽 상단 메뉴
+		// --------------------------------------
+		
 
 		JLabel lblNewLabel = new JLabel("\uC7A5\uBC14\uAD6C\uB2C8");
-		lblNewLabel.setFont(new Font("함초롬돋움", Font.BOLD, 30));
+		lblNewLabel.setFont(new Font("맑은 고딕", Font.BOLD, 35));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setBounds(677, 28, 206, 63);
+		lblNewLabel.setBounds(670, 28, 206, 63);
 		this.add(lblNewLabel);
 
 		JButton btnNewButton = new JButton(new ImageIcon("images/buttonsImages/Counter.png"));
@@ -129,6 +168,8 @@ public class ProductSelect extends JPanel {
 		});
 		btnNewButton.setBounds(1057, 39, 105, 39);
 		this.add(btnNewButton);
+		// ----------------------------------------------------------
+		// --------------------------오른쪽 테이블 ------------------------------
 		jtable = new JTable();
 
 		Object[][] rowData = { { 1, null, null, null, null }, { 2, null, null, null, null },
@@ -139,7 +180,7 @@ public class ProductSelect extends JPanel {
 				{ 3, null, null, null, null }, { 4, null, null, null, null }, { null, null, null, null, null },
 				{ 3, null, null, null, null }, { 4, null, null, null, null }, { null, null, null, null, null } };
 
-		String[] header = { "상품 분류", "상품", "개수", "가격", "삭제" };
+		String[] header = { "No", "제품명", "개수", "가격", "삭제" };
 
 		dtm = new DefaultTableModel(rowData, header) {
 			@Override
@@ -151,8 +192,15 @@ public class ProductSelect extends JPanel {
 		};
 
 		jtable.setModel(dtm);
-		jtable.getTableHeader().setFont(new Font("맑은 고딕", Font.PLAIN, 20));
+		jtable.getTableHeader().setFont(new Font("맑은 고딕", Font.BOLD, 20));
 		jtable.setBounds(1, 0, 450, 300);
+		jtable.getColumnModel().getColumn(0).setPreferredWidth(50);
+		jtable.getColumnModel().getColumn(1).setPreferredWidth(150);
+		jtable.getColumnModel().getColumn(2).setPreferredWidth(50);
+		jtable.getColumnModel().getColumn(3).setPreferredWidth(150);
+		jtable.getColumnModel().getColumn(4).setPreferredWidth(50);
+		
+		jtable.setFont(new Font("맑은 고딕", Font.PLAIN, 16));
 		jtable.setRowHeight(37);
 		jsp = new JScrollPane(jtable);
 
@@ -177,36 +225,9 @@ public class ProductSelect extends JPanel {
 		jsp.setBounds(700, 118, 475, 260);
 
 		this.add(jsp);
-		JLabel label = new JLabel("\uC0C1\uD488 \uC120\uD0DD");
-		label.setHorizontalAlignment(SwingConstants.CENTER);
-		label.setFont(new Font("Dialog", Font.BOLD, 30));
-		label.setBounds(0, 28, 188, 63);
-		add(label);
 
-		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] { "\uBD84\uB958", "\uC81C\uD488 \uBA85",
-				"\uC81C\uC870 \uD68C\uC0AC", "\uBD84\uB958 \uBCC4" }));
-		comboBox.setBounds(176, 39, 124, 36);
-		add(comboBox);
-
-		textField = new JTextField();
-		textField.setText("\uC785\uB825\uB780");
-		textField.setBounds(312, 39, 116, 36);
-		add(textField);
-		textField.setColumns(10);
-
-		JButton searchbtn = new JButton(new ImageIcon("images/buttonsImages/SEARCH.PNG"));
-		searchbtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
-		searchbtn.setBounds(440, 39, 100, 40);
-		add(searchbtn);
-
-		JButton enterbtn = new JButton(new ImageIcon("images/buttonsImages/OK_ICON.PNG"));
-		enterbtn.setBounds(555, 39, 100, 40);
-		add(enterbtn);
-
+		JButton[] settingButtons = { enterbtn, searchbtn, btnNewButton };
+		ComponentSettings.imageButtonSetting(settingButtons);
 		this.setVisible(true);
 	}
 

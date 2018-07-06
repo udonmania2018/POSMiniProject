@@ -113,7 +113,7 @@ public class POSMainCenterMenu extends JPanel {
 		
 		table3.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		table3.getColumnModel().getColumn(0).setPreferredWidth(100);
-		table3.getColumnModel().getColumn(1).setPreferredWidth(300);
+		table3.getColumnModel().getColumn(1).setPreferredWidth(290);
 		table3.setBounds(800, 200, 400, 200);
 		
 		

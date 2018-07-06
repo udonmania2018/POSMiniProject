@@ -11,6 +11,7 @@ import javax.swing.SwingConstants;
 
 public class POSMainBottomMenu extends JPanel {
 
+	public POSMainBottomMenu () { } 
 	
 	public POSMainBottomMenu(JPanel contentPanel) {
 		this.setBounds(0, 0, 1200, 100);
