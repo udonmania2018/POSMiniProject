@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import model.vo.EventGroup;
 import model.vo.ProductGroup;
 
+// github conflict testing...
 public class Event {
 	public void addEventGroup(EventGroup eg) {
 		File eventdir = new File("C:\\POSDB");

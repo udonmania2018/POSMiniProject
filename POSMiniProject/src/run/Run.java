@@ -6,8 +6,8 @@ import view.totalManageSystem.management.ManagementSystem;
 public class Run {
 	public static void main(String[] args) {
 		
-		ManagementSystem ms = new ManagementSystem();		
-		// POSMainFrame mf = new POSMainFrame();
+		// ManagementSystem ms = new ManagementSystem();		
+		POSMainFrame mf = new POSMainFrame();
 	}
 	
 }
