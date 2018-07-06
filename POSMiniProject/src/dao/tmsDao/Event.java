@@ -101,7 +101,7 @@ public class Event {
 		}
 
 		String code = null;
-		if(cnt< 10){
+		if(cnt < 10){
 			code = "00"+cnt;
 		} else if ( cnt < 100){
 			code = "0"+cnt;
