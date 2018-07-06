@@ -56,7 +56,6 @@ public class Event {
 			eventdir.mkdirs();
 		}
 
-		// 파일 읽어오기
 		try (ObjectInputStream ois = new ObjectInputStream(
 				new FileInputStream(eventdir.getPath() + "\\EventGroup.dat"))) {
 
@@ -69,7 +68,7 @@ public class Event {
 			}
 
 		} catch (EOFException e) {
-			System.out.println("데이터 로드 성공");
+			System.out.println("Successfully running");
 		} catch (FileNotFoundException e) {
 
 			return null;
