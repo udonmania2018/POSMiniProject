@@ -6,6 +6,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import view.ComponentSettings;
+
 import javax.swing.JTextPane;
 import java.awt.Font;
 import javax.swing.JTextField;
@@ -64,17 +67,20 @@ public class SafeMoney extends JFrame {
 		
 		//확인 버튼
 		JButton chkButton;
-		chkButton = new JButton(new ImageIcon("ICONPACK/OK_ICON.PNG"));
+		chkButton = new JButton(new ImageIcon("images/buttonsImages/OK_ICON.PNG"));
 		chkButton.setBorderPainted(false); // 버튼 테두리 설정해제
 		chkButton.setBounds(79, 272, 75, 34); // 버튼 크기 지정
 		add(chkButton);
 		
 		//취소 버튼
 		JButton backButton;
-		backButton = new JButton(new ImageIcon("ICONPACK/CANCEL_ICON.PNG"));
+		backButton = new JButton(new ImageIcon("images/buttonsImages/CANCEL_ICON.PNG"));
 		backButton.setBorderPainted(false); // 버튼 테두리 설정해제
 		backButton.setBounds(193, 272, 75, 34); // 버튼 크기 지정
 		add(backButton);
+		
+		JButton[] buttons = {chkButton,backButton};
+		ComponentSettings.imageButtonSetting(buttons);
 		
 		//선
 		JPanel line = new JPanel();

@@ -84,37 +84,42 @@ public class Product {
 		return list;
 	}
 
+	// 제품분류 코드 값의 마지막 번호 +1 받아 오기
 	public String getProudctGroupCode() {
-
+		// 제품분류 코드는 1부터 시작하기 때문에 초기값 1
 		int cnt = 1;
-
+		// 스트림 연결
 		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("C:\\POSDB\\productGroup.dat"))) {
-
-			while (ois.read() != -1) {
-				cnt++;
+			Object temp = null;
+			while (true) {
+				temp = ois.readObject();
+				cnt ++;
 			}
 
+		} catch(EOFException e){
+			String code = "";
+			if(cnt < 10){
+				code = "00"+cnt;
+			} else if (cnt < 100){
+				code = "0"+cnt;
+			}
+			
+			return code;
 		} catch (FileNotFoundException e) {
 			return "001";
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-
-		String code = null;
-		;
-		if (cnt < 10) {
-			code = "00" + cnt;
-		} else if (cnt < 100) {
-			code = "0" + cnt;
-		}
-
-		return code;
+		return null;
 	}
 
 
 	public void addManufacturer(ManufactureGroup mfg) {
-		// TODO Auto-generated method stub
+		
 		
 	}
 }
