@@ -69,4 +69,21 @@ public class ProductController {
 		return dao.selectProductOnName(serchName);
 	}
 	
+	public Product selectProductOnCode(String productCode){
+		
+		return dao.selectProductOnCode(productCode);
+	}
+
+
+
+	public void modifyProduct(Product AfterProduct,Product beforeProduct) {
+		// TODO Auto-generated method stub
+		dao.modifyProduct(AfterProduct,beforeProduct);
+	}
+
+	public void deleteProduct(String barcode) {
+		// TODO Auto-generated method stub
+		dao.delectProduct(barcode);
+	}
+	
 }

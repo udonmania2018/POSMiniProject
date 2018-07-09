@@ -54,7 +54,6 @@ public class ProductModifyMain extends JPanel {
 		textField.setColumns(10);
 
 		String ColumnNames[] = { "바코드", "제품명", "판매가격", "발주가격" };
-
 		
 		Object rowData[][] = null;
 

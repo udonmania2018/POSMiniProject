@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import model.vo.totalManageSystem.ManufactureGroup;
 import model.vo.totalManageSystem.Product;
@@ -208,10 +209,9 @@ public class ProductDao {
 		ArrayList<Product> list = new ArrayList<Product>();
 
 		// 파일 읽어오기
-		try (ObjectInputStream ois = new ObjectInputStream(
-				new FileInputStream(checkdir.getPath() + "\\product.dat"))) {
+		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(checkdir.getPath() + "\\product.dat"))) {
 			while (true) {
-				list.add((Product)ois.readObject());
+				list.add((Product) ois.readObject());
 			}
 
 		} catch (EOFException e) {
@@ -227,54 +227,6 @@ public class ProductDao {
 			e.printStackTrace();
 		}
 		return list;
-	}
-
-	public void addProduct(Product product) {
-		// TODO Auto-generated method stub
-		// 기존의 데이터값 불러오기
-		ArrayList<Product> orignData = selectProduct();
-		if (orignData == null) {
-			// 기존 데이터가 없을 경우
-			orignData = new ArrayList<Product>();
-		}
-
-		int productCnt = 1;
-
-		for (int i = 0; i < orignData.size(); i++) {
-			if (product.equals(orignData.get(i).getProductGroupCode())) {
-				productCnt++;
-			}
-		}
-		String saveProCnt = "";
-		if (productCnt < 10) {
-			saveProCnt = "00" + productCnt;
-		} else if (productCnt < 100) {
-			saveProCnt = "0" + productCnt;
-		} else {
-			saveProCnt = productCnt + "";
-		}
-
-		String manufacturerCode = product.getManufacturerCode();
-		String productCode = "880" + product.getManufacturerCode() + product.getProductGroupCode() + saveProCnt;
-		product.setBarcode(productCode);
-		orignData.add(product);
-
-		try (ObjectOutputStream oos = new ObjectOutputStream(
-				new FileOutputStream(checkdir.getPath() + "\\product.dat"))) {
-			// 객체 저장
-			for (int i = 0; i < orignData.size(); i++) {
-				oos.writeObject(orignData.get(i));
-			}
-			oos.flush();
-
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 
 	public void deleteProductGroup(ProductGroup pg) {
@@ -436,5 +388,112 @@ public class ProductDao {
 			e.printStackTrace();
 		}
 		return list;
+	}
+
+	public Product selectProductOnCode(String productCode) {
+		ArrayList<Product> list = selectProduct();
+		System.out.println(productCode);
+		for (int i = 0; i < list.size(); i++) {
+			// list.get(i)를 하면 i번째에 있는 객체를 리턴
+			System.out.println(list.get(i).getBarcode());
+			if (list.get(i).getBarcode().equals(productCode)) {
+				System.out.println(list.get(i));
+				// 해당하는 Product 타입의 객체를 반환
+				return list.get(i);
+			}
+		}
+
+		// 일치하는 것이 없으면 null을 반환. 그러나 입력값은 무조건 데이터에 있는 것이기 때문에 실제로는 실행되지 않음
+		return null;
+	}
+
+	public void addProduct(Product product) {
+		// TODO Auto-generated method stub
+		// 기존의 데이터값 불러오기
+		ArrayList<Product> orignData = selectProduct();
+		if (orignData == null) {
+			// 기존 데이터가 없을 경우
+			orignData = new ArrayList<Product>();
+		}
+
+		int productCnt = 1;
+		int checkCode = 0;
+		int checkCode2 = 0;
+		for (int i = 0; i < orignData.size(); i++) {
+			if (product.getManufacturerCode().equals(orignData.get(i).getManufacturerCode())) {
+				if (product.getProductGroupCode().equals(orignData.get(i).getProductGroupCode())) {
+					checkCode2 = Integer.parseInt(orignData.get(i).getBarcode().toString().substring(9));
+					System.out.println(checkCode2 + " 이거임");
+					if((checkCode2 - checkCode) != 1){
+						break;
+					} else {
+						checkCode = checkCode2;
+					}
+					productCnt++;
+				} 
+			}
+		}
+		String saveProCnt = "";
+		if (productCnt < 10) {
+			saveProCnt = "00" + productCnt;
+		} else if (productCnt < 100) {
+			saveProCnt = "0" + productCnt;
+		} else {
+			saveProCnt = productCnt + "";
+		}
+
+		String manufacturerCode = product.getManufacturerCode();
+		String productCode = "880" + product.getManufacturerCode() + product.getProductGroupCode() + saveProCnt;
+		product.setBarcode(productCode);
+		orignData.add(product);
+
+		try (ObjectOutputStream oos = new ObjectOutputStream(
+				new FileOutputStream(checkdir.getPath() + "\\product.dat"))) {
+			// 객체 저장
+			for (int i = 0; i < orignData.size(); i++) {
+				oos.writeObject(orignData.get(i));
+			}
+			oos.flush();
+
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void delectProduct(String barcode) {
+		// TODO Auto-generated method stub
+		ArrayList<Product> orignData = selectProduct();
+		for (int i = 0; i < orignData.size(); i++) {
+			if(orignData.get(i).getBarcode().equals(barcode)){
+				orignData.remove(i);
+			}
+		}
+		try (ObjectOutputStream oos = new ObjectOutputStream(
+				new FileOutputStream(checkdir.getPath() + "\\product.dat"))) {
+			// 객체 저장
+			for (int i = 0; i < orignData.size(); i++) {
+				oos.writeObject(orignData.get(i));
+			}
+			oos.flush();
+
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void modifyProduct(Product afterProduct, Product beforeProduct) {
+		// TODO Auto-generated method stub
+		delectProduct(beforeProduct.getBarcode());
+		addProduct(afterProduct);
 	}
 }

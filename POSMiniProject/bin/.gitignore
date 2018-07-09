@@ -1,6 +1,4 @@
-/controller/
-/model/
-/run/
+/view/
 /test/
 /thread/
-/view/
+/run/
