@@ -62,13 +62,8 @@ public class AddProduct {
 			cal.add(Calendar.MONTH, Integer.parseInt(first));
 			cal.add(Calendar.DATE, Integer.parseInt(second));
 		}
-		
-		System.out.println(first+","+second+" // ");
-		System.out.println(date);
-		System.out.println(cal.getTime());
-		
+			
 		String strDate2 = df.format(date.getTime());
-		System.out.println(strDate2);
 
 		// 입력 받은 값에 유효성 검사 문자열 추가
 		tempStr += String.valueOf(effectivenessNum) + check+strDate2;

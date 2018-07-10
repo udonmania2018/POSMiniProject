@@ -43,6 +43,7 @@ public class ProductOrder extends JPanel {
 	private Object data[][];
 	private ArrayList<Product> list;
 	private int sum;
+	private ArrayList<ProductStock> stockList ;
 
 	public ProductOrder() {
 
@@ -52,7 +53,7 @@ public class ProductOrder extends JPanel {
 		setBounds(0, 0, 1199, 399);
 		this.setLayout(null);
 		data = null;
-
+		stockList = pc.selectProductStock();
 		/*
 		 * // 테이블 임시 데이터 반드시 비고값에 true로 초기화 Object data[][] = {{ "ㄹㄹㄹ", "ㄷㄷㄷ",
 		 * "ㅇㅇㅇ", "ㅌㅌㅌ", true }, { null, null, null, null, true }, { null, null,
@@ -350,7 +351,13 @@ public class ProductOrder extends JPanel {
 							rowData[1] = basketData[i][1];
 							rowData[2] = Integer.parseInt(basketData[i][2].toString())
 									* Integer.parseInt(basketData[i][3].toString());
-							rowData[3] = 0;
+							int quantity = 0;
+							for (int j = 0; j < stockList.size(); j++) {
+								if(stockList.get(j).getBarcode().equals(basketData[i][0].toString())){
+									quantity += stockList.get(j).getQuantity();
+								}
+							}
+							rowData[3] = quantity;
 							rowData[4] = basketData[i][2];
 							rowData[5] = basketData[i][5];
 							dtm.addRow(rowData);
@@ -381,7 +388,13 @@ public class ProductOrder extends JPanel {
 								rowData[1] = basketData[j][1];
 								rowData[2] = Integer.parseInt(basketData[j][2].toString())
 										* Integer.parseInt(basketData[j][3].toString());
-								rowData[3] = 0;
+								int quantity = 0;
+								for (int k = 0; k < stockList.size(); k++) {
+									if(stockList.get(k).getBarcode().equals(basketData[j][0].toString())){
+										quantity += stockList.get(k).getQuantity();
+									}
+								}
+								rowData[3] = quantity;
 								rowData[4] = basketData[j][2];
 								rowData[5] = basketData[j][5];
 								dtm.addRow(rowData);

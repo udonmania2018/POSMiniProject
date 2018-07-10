@@ -22,6 +22,10 @@ public class POSController {
 		md.saveMoneys(moneys);
 	}
 
+	public ArrayList<ProductStock> selectProductStock() {
+		return od.seletProductStock();
+	}
+	
 	public void orderProduct(ArrayList<ProductStock> orderList) {
 		// TODO Auto-generated method stub
 		AddProduct ap = new AddProduct();
@@ -29,6 +33,6 @@ public class POSController {
 			String path = ap.addAction(orderList.get(i));
 			orderList.get(i).setBarcodePath(path);
 		}
-		//md.orderProduct(orderList);
+		od.orderProduct(orderList);
 	}
 }
