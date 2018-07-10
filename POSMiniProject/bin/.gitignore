@@ -1,7 +1,5 @@
-/view/
-/test/
-/thread/
-/run/
 /controller/
 /model/
+/test/
+/view/
 /barcode/
