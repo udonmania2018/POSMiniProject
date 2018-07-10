@@ -15,6 +15,8 @@ public class POSMainFrame extends JFrame {
 	private JPanel contentPane;
 	private POSMainCenterMenu centerMenu = new POSMainCenterMenu();
 	public static Thread eventSwipe ;
+	public static Object[][] staticData;
+	
 	public POSMainFrame() {
 		getContentPane().setLayout(null);
 		this.setBounds(400, 400, 1200, 640);

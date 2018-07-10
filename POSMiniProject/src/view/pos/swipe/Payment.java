@@ -1,11 +1,16 @@
+// modified 07/10/17:41
+
 package view.pos.swipe;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -49,7 +54,7 @@ public class Payment extends JPanel {
 		scrollPane.getViewport().setBackground(Color.WHITE);
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
-		scrollPane.setBounds(20, 10, 560, 90);
+		scrollPane.setBounds(5, 4, 386, 90);
 		this.add(scrollPane, BorderLayout.CENTER);
 		
 	    // 가운데 정렬 위한 코드
@@ -72,48 +77,70 @@ public class Payment extends JPanel {
 		
 		// 포인트 버튼
 		JButton pointBtn = new JButton("");
-		pointBtn.setBounds(30, 110, 120, 80);
+		pointBtn.setBounds(63, 105, 105, 40);
 		pointBtn.setBorderPainted(false);
 		pointBtn.setBackground(Color.WHITE);
 		pointBtn.setOpaque(false);
 		pointBtn.setVerticalTextPosition(SwingConstants.CENTER);
 		pointBtn.setHorizontalTextPosition(SwingConstants.CENTER);
-		pointBtn.setIcon(new ImageIcon("ICONPACK/POINT_ICON.PNG"));
+		pointBtn.setIcon(new ImageIcon("images/buttonsImages/POINT_ICON.PNG"));
+		pointBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// 현금 결제 버튼의 동작 지정
+				JOptionPane.showMessageDialog(null, "포인트 결제 모듈이 필요합니다!", "Error", JOptionPane.ERROR_MESSAGE);
+			}
+		});
 		this.add(pointBtn);
 		
 		// 카드 결제 버튼
 		JButton cardBtn = new JButton("");
-		cardBtn.setBounds(170, 110, 120, 80);
+		cardBtn.setBounds(221, 105, 105, 40);
 		cardBtn.setBorderPainted(false);
 		cardBtn.setBackground(Color.WHITE);
 		cardBtn.setOpaque(false);
 		cardBtn.setVerticalTextPosition(SwingConstants.CENTER);
 		cardBtn.setHorizontalTextPosition(SwingConstants.CENTER);
-		cardBtn.setIcon(new ImageIcon("ICONPACK/CARDPAY_ICON.PNG"));
+		cardBtn.setIcon(new ImageIcon("images/buttonsImages/CARDPAY_ICON.PNG"));
+		cardBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// 카드 결제 버튼의 동작 지정
+				JOptionPane.showMessageDialog(null, "카드 결제 모듈이 필요합니다!", "Error", JOptionPane.ERROR_MESSAGE);
+			}
+		});
 		this.add(cardBtn);
 		
 		// 현금 결제 버튼
 		JButton cashBtn = new JButton("");
-		cashBtn.setBounds(310, 110, 120, 80);
+		cashBtn.setBounds(63, 155, 105, 40);
 		cashBtn.setBorderPainted(false);
 		cashBtn.setBackground(Color.WHITE);
 		cashBtn.setOpaque(false);
 		cashBtn.setVerticalTextPosition(SwingConstants.CENTER);
 		cashBtn.setHorizontalTextPosition(SwingConstants.CENTER);
-		cashBtn.setIcon(new ImageIcon("ICONPACK/CASHPAY_ICON.PNG"));
+		cashBtn.setIcon(new ImageIcon("images/buttonsImages/CASHPAY_ICON.PNG"));
+		cashBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// 현금 결제 버튼의 동작 지정
+				JOptionPane.showMessageDialog(null, "현금 결제 모듈이 필요합니다!", "Error", JOptionPane.ERROR_MESSAGE);
+			}
+		});
 		this.add(cashBtn);
 		
 		// 취소 버튼
 		JButton cancelBtn = new JButton("");
-		cancelBtn.setBounds(450, 110, 120, 80);
+		cancelBtn.setBounds(221, 155, 105, 40);
 		cancelBtn.setBorderPainted(false);
 		cancelBtn.setBackground(Color.WHITE);
 		cancelBtn.setOpaque(false);
 		cancelBtn.setVerticalTextPosition(SwingConstants.CENTER);
 		cancelBtn.setHorizontalTextPosition(SwingConstants.CENTER);
-		cancelBtn.setIcon(new ImageIcon("ICONPACK/CANCEL_ICON.PNG"));
-		this.add(cancelBtn);
-		
-
+		cancelBtn.setIcon(new ImageIcon("images/buttonsImages/CANCEL_ICON.PNG"));
+		cancelBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// 현금 결제 버튼의 동작 지정
+				JOptionPane.showMessageDialog(null, "결제 취소", "Error", JOptionPane.ERROR_MESSAGE);
+			}
+		});
+		this.add(cancelBtn);		
 	}
 }

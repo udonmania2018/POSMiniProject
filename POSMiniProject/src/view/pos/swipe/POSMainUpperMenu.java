@@ -27,8 +27,6 @@ public class POSMainUpperMenu extends JPanel implements ActionListener {
 		this.add(jp);
 		jp.setLayout(null);
 
-		// fake menu button
-
 		// SOS버튼
 		JButton sosBtn = new JButton("");
 		sosBtn.setBounds(40, 10, 120, 80);
@@ -124,6 +122,9 @@ public class POSMainUpperMenu extends JPanel implements ActionListener {
 						temp.setOpaque(false);
 						contentPanel.add(temp);
 						contentPanel.repaint();
+						synchronized (POSMainFrame.eventSwipe) {
+							POSMainFrame.eventSwipe.suspend();
+						}
 					}
 					// System.out.println("결제 버튼 처리 OK");
 				} else if (e.getSource() == sosBtn) {
@@ -141,9 +142,7 @@ public class POSMainUpperMenu extends JPanel implements ActionListener {
 					Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 					sm.setLocation((screenSize.width - frameSize.width) / 2, // X축
 							(screenSize.height - frameSize.height) / 2);// Y축
-
 				}
-
 			}
 		};
 

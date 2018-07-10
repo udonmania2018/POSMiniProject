@@ -18,7 +18,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
-import thread.EventViewSwipe;
+import model.vo.totalManageSystem.Product;
 
 public class POSMainCenterMenu extends JPanel {
 	private JTable table;
@@ -26,29 +26,26 @@ public class POSMainCenterMenu extends JPanel {
 	private JTable table3;
 	private JScrollPane scrollPane,scrollPane2,scrollPane3 ;
 	private JLabel eventImage;
+
 	public POSMainCenterMenu() {
 		this.setBounds(0, 0, 1200, 400);
 		setLayout(null);
 		// 좌측 테이블 가짜데이터
-		Object data[][] = {
-				{"001", "오징어땅콩", "1500", "1", "1500", "행사상품"},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null}};
+		Object data[][] = POSMainFrame.staticData;
+		
+		// tmp code
+		if(POSMainFrame.staticData == null){
+			System.out.println("staticData는 null");
+		}else{
+
+			System.out.println(POSMainFrame.staticData[0][0]);
+			
+			
+		}
+		
+		// 여기까지
 		String colNames[] = { "번호", "상품명", "단가", "수량", "금액", "비고" };
-		
-		
+
 		DefaultTableModel dtm = new DefaultTableModel(data, colNames){
 			@Override
 			public boolean isCellEditable(int row, int column) {
