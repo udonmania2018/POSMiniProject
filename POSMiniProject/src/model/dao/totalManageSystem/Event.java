@@ -11,43 +11,46 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 import model.vo.totalManageSystem.EventGroup;
+import model.vo.totalManageSystem.ManufactureGroup;
+import model.vo.totalManageSystem.Product;
+import model.vo.totalManageSystem.ProductGroup;
 
-// 이벤트 테스트 클래스. 주석 수정.
-// 코드를 작성할 때에는 반드시 주석을 달아 주세요. master에 commit하면 안됩니다.
-// 자신만의 branch를 만들어서 사용해 보세요.
-// 아마도...
-// blah blah ughu
+
 public class Event {
-	public void addEventGroup(EventGroup eg) {
+	File checkdir;
+	
+	public Event(){
 		// 폴더가 있는지
-		File checkdir = new File("C:\\POSDB");
+		checkdir = new File("C:\\POSDB");
 		if (!checkdir.exists()) {
 			checkdir.mkdirs();
 		}
-  
 		
-		
-		// 기존의 데이터값 불러오기
+	}
+	public void addEventGroup(EventGroup eg) {
+
+
 		ArrayList<EventGroup> orignData = selectEventGroup();
+		
 		if (orignData == null) {
-			// 기존 데이터가 없을 경우
+
 			orignData = new ArrayList<EventGroup>();
 		} else {
-			// 기존의 데이터가 있을 경우
+
 			orignData.add(eg);
 		}
 		try (ObjectOutputStream oos = new ObjectOutputStream(
 				new FileOutputStream(checkdir.getPath() + "\\eventGroup.dat"))) {
-			// 객체 저장
+
 			for (int i = 0; i < orignData.size(); i++) {
 				oos.writeObject(orignData.get(i));
 			}
 			oos.flush();
 
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
+
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -55,68 +58,170 @@ public class Event {
 	}
 
 	public ArrayList<EventGroup> selectEventGroup() {
-		// 읽어온 데이터를 저장할 컬렉션 선언
+
 		ArrayList<EventGroup> list = new ArrayList<EventGroup>();
 
-		// 폴더가 있는지 확인
-		File checkdir = new File("C:\\POSDB");
-		if (!checkdir.exists()) {
-			checkdir.mkdirs();
-		}
 
-		// 파일 읽어오기
+
 		try (ObjectInputStream ois = new ObjectInputStream(
 				new FileInputStream(checkdir.getPath() + "\\eventGroup.dat"))) {
-			// 읽어온 파일의 정보를 담을 임시 ProductGroup 객체 temp를 null로 초기화
-			EventGroup temp = null;
+
+
 			while (true) {
-				// 읽어온 파일의 정보를 임시 저장소 객체인 temp에 저장
-				temp = (EventGroup) ois.readObject();
-				// 저장된 temp객체를 컬렉션에 추가
-				list.add(temp);
+				list.add((EventGroup) ois.readObject());
 			}
 
 		} catch (EOFException e) {
 			System.out.println("데이터 로드 성공...");
 		} catch (FileNotFoundException e) {
-			// 데이터 저장이 처음일 경우 처리
+
 			return null;
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 
 		return list;
 	}
 	
-	public String getProudctGroupCode() {
-		
-		int cnt = 1;
-		
-		try(ObjectInputStream ois = new ObjectInputStream(
-				new FileInputStream("C:\\POSDB\\eventGroup.dat"))){
-			
-			while(ois.read() != -1){
-				cnt++;
+	
+	public void deleteEventGroup(String eg){
+
+
+		ArrayList<EventGroup> list = selectEventGroup();
+
+		for (int i = 0; i < list.size(); i++) {
+			if (list.get(i).getEventName().equals(eg)) {
+				list.remove(i);
+				for (int j = i; j < list.size(); j++) {
+					int temp = Integer.parseInt(list.get(j).getEventName());
+					temp--;
+					String saveCode = "";
+					if (temp < 10) {
+						saveCode = "0" + temp;
+					} else {
+						saveCode = temp + "";
+					}
+					list.get(j).setEventName(saveCode);
+					}
+				break;
 			}
-			
+		}
+
+		try (ObjectOutputStream oos = new ObjectOutputStream(
+				new FileOutputStream(checkdir.getPath() + "\\eventGroup.dat"))) {
+			for (int i = 0; i < list.size(); i++) {
+				oos.writeObject(list.get(i));
+			}
 		} catch (FileNotFoundException e) {
-			return "001";
+
+			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+
+			e.printStackTrace();
+		}
+
+	
+	}
+	
+	public void modifyEvent(EventGroup eg) {
+
+		ArrayList<EventGroup> list = selectEventGroup();
+		for (int i = 0; i < list.size(); i++) {
+			System.out.println(list.get(i).getEventName());
+
+		}
+		try (ObjectOutputStream oos = new ObjectOutputStream(
+				new FileOutputStream(checkdir.getPath() + "\\eventGroup.dat"))) {
+			for (int i = 0; i < list.size(); i++) {
+				oos.writeObject(list.get(i));
+			}
+			oos.flush();
+		} catch (FileNotFoundException e) {
+
+			e.printStackTrace();
+		} catch (IOException e) {
+
+			e.printStackTrace();
+		}
+	}
+	
+	public ArrayList<EventGroup> selectEventOnName(String searchName) {
+
+		ArrayList<EventGroup> list = new ArrayList<EventGroup>();
+
+
+		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(checkdir.getPath() + "\\eventGroup.dat"))) {
+			while (true) {
+				list.add((EventGroup) ois.readObject());
+			}
+		} catch (EOFException e) {
+			if (searchName == null || searchName.trim().equals("")) {
+
+			} else {
+				for (int i = 0; i < list.size();) {
+		               if (!(list.get(i).getEventName().contains(searchName))) {
+		                  list.remove(i);
+		               } else {
+		                  i++;
+		               }
+		            }
+
+			}
+			System.out.println("데이터 로드 성공...");
+			return list;
+		} catch (FileNotFoundException e) {
+
+			return null;
+		} catch (IOException e) {
+
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+
+			e.printStackTrace();
+		}
+		return list;
+	}
+	public void modifyEventGroup(EventGroup eg) {
+		ArrayList<EventGroup> list = selectEventGroup();
+		for (int i = 0; i < list.size(); i++) {
+			if (list.get(i).getEventName().equals(eg.getEventName())) {
+				list.get(i).setEventName(eg.getEventName());
+				break;
+			}
+		}
+		try (ObjectOutputStream oos = new ObjectOutputStream(
+				new FileOutputStream(checkdir.getPath() + "\\eventGroup.dat"))) {
+			for (int i = 0; i < list.size(); i++) {
+				oos.writeObject(list.get(i));
+			}
+		} catch (FileNotFoundException e) {
+
+			e.printStackTrace();
+		} catch (IOException e) {
+
 			e.printStackTrace();
 		}
 		
-		String code = null;;
-		if(cnt< 10){
-			code = "00"+cnt;
-		} else if ( cnt < 100){
-			code = "0"+cnt;
-		}
-		
-		return code;
 	}
+	public EventGroup selectEventOnNames(String searchName) {
+		ArrayList<EventGroup> list = selectEventGroup();
+		System.out.println(searchName);
+		for (int i = 0; i < list.size(); i++) {
+			// list.get(i)를 하면 i번째에 있는 객체를 리턴
+			System.out.println(list.get(i).getEventName());
+			if (list.get(i).getEventName().equals(searchName)) {
+				System.out.println(list.get(i));
+				// 해당하는 Product 타입의 객체를 반환
+				return list.get(i);
+			}
+		}
+
+		// 일치하는 것이 없으면 null을 반환. 그러나 입력값은 무조건 데이터에 있는 것이기 때문에 실제로는 실행되지 않음
+		return null;
+	}
+	
 }

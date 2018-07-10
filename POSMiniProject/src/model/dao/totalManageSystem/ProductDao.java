@@ -392,7 +392,6 @@ public class ProductDao {
 
 	public Product selectProductOnCode(String productCode) {
 		ArrayList<Product> list = selectProduct();
-		System.out.println(productCode);
 		for (int i = 0; i < list.size(); i++) {
 			// list.get(i)를 하면 i번째에 있는 객체를 리턴
 			System.out.println(list.get(i).getBarcode());

@@ -2,18 +2,33 @@ package controller.pos;
 
 import java.util.ArrayList;
 
-import model.dao.pos.POSdao;
+import barcode.AddProduct;
+import model.dao.pos.MoneyDao;
+import model.dao.pos.OrderDao;
+import model.vo.pos.Moneys;
+import model.vo.pos.ProductStock;
 import model.vo.totalManageSystem.Product;
 
 public class POSController {
-	POSdao dao = new POSdao();
+	private OrderDao od = new OrderDao();
+	private MoneyDao md = new MoneyDao();
 	
-	// 기본 생성자
-	public POSController(){}
-	
-	public ArrayList<Product> selectProductOnName(String searchName){
-		// searchName을 매개변수로 넣은 dao.selectProductOnName을 반환
-		return dao.selectProductOnName(searchName);
+	public ArrayList<Product> selectProductOnName(String text) {
+		return od.seletProductOnName(text);
 	}
 
+	public void saveMoney(Moneys moneys) {
+		// TODO Auto-generated method stub
+		md.saveMoneys(moneys);
+	}
+
+	public void orderProduct(ArrayList<ProductStock> orderList) {
+		// TODO Auto-generated method stub
+		AddProduct ap = new AddProduct();
+		for (int i = 0; i < orderList.size(); i++) {
+			String path = ap.addAction(orderList.get(i));
+			orderList.get(i).setBarcodePath(path);
+		}
+		//md.orderProduct(orderList);
+	}
 }

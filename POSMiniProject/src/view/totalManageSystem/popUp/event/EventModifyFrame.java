@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -21,40 +22,46 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
+import controller.totalManageSystem.EventController;
+import model.vo.totalManageSystem.EventGroup;
+import model.vo.totalManageSystem.Product;
 import view.ComponentSettings;
 import view.totalManageSystem.popUp.ControllPanel;
 import view.totalManageSystem.popUp.MainFrame;
 
 public class EventModifyFrame extends JPanel {
-	
+
 	private JPanel contentPane;
 	private JTextField textField;
 	private JTable table;
 	private JComboBox comboBox;
 	private JButton button;
+	private EventController ect = new EventController();
 
 	public EventModifyFrame(MainFrame frame, ControllPanel mainPanel) {
 		this.setBackground(Color.WHITE);
 		this.setBounds(0,0,580,600);
 		this.setLayout(null);
-		
+
 		// 패널 상단 팝업 제목
 		JLabel lblNewLabel = new JLabel("이벤트 수정");
 		lblNewLabel.setBounds(200, 20, 206, 82);
 		lblNewLabel.setFont(new Font("함초롬돋움", Font.PLAIN, 30));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		this.add(lblNewLabel);
-		
-		
+
+
 		button = new JButton(new ImageIcon("images/buttonsImages/SEARCH.PNG"));
 		JButton[] btn = { button };
 		ComponentSettings.imageButtonSetting(btn);
 		button.setBounds(454, 107, 70, 42);
 		this.add(button);
 
+		
+
 		this.setVisible(true);
-		
-		
+
+
 		JButton btnNewButton = new JButton(new ImageIcon("images/buttonsImages/ADD_ICON.PNG"));
 		btnNewButton.setBounds(423, 40, 100, 40);
 		btnNewButton.addActionListener(new ActionListener() {
@@ -67,27 +74,16 @@ public class EventModifyFrame extends JPanel {
 			}
 		});
 		this.add(btnNewButton);
-		
-		
-		
-		
-		
+
+
 		textField = new JTextField();
-		textField.setText("\uC785\uB825\uB780");
 		textField.setBounds(220, 110, 221, 35);
 		this.add(textField);
 		textField.setColumns(10);
-		
+
 		String ColumnNames[] = { "이벤트명", "기간", "이벤트대상", "이벤트분류" };
 
-		Object rowData[][] = { { "핫바1+1", "2018/7/15", "kh카드회원", "1+1" }, { null, null, null, null },
-				{ "콜라2+1", null, null, null }, { null, null, null, null }, { null, null, null, null },
-				{ "도시락 10%할인", null, null, null }, { null, null, null, null }, { null, null, null, null },
-				{ null, null, null, null }, { null, null, null, null }, { null, null, null, null },
-				{ null, null, null, null }, { null, null, null, null }, { null, null, null, null },
-				{ null, null, null, null }, { null, null, null, null }, { null, null, null, null },
-				{ null, null, null, null }, { null, null, null, null }, { null, null, null, null },
-				{ null, null, null, null }, { null, null, null, null }, { null, null, null, null } };
+		Object rowData[][] = null;
 
 		table = new JTable();
 		table.setModel(new DefaultTableModel(rowData, ColumnNames) {
@@ -112,7 +108,7 @@ public class EventModifyFrame extends JPanel {
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
+
 				if (e.getButton() == 1) {
 					JTable temp = (JTable) e.getSource();
 					int row = temp.getSelectedRow();
@@ -158,18 +154,36 @@ public class EventModifyFrame extends JPanel {
 		comboBox.addItem("이벤트분류");
 		comboBox.setBounds(110, 110, 96, 35);
 		this.add(comboBox);
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-       /* String[] columnNames = {"이벤트 코드",
+
+
+
+		button.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				ArrayList<EventGroup> list = ect.selectEventOnName(textField.getText());
+
+				Object[][] tableData = new Object[list.size()][4];
+
+				for (int i = 0; i < list.size(); i++) {
+					Object[] temp = {list.get(i).getEventName()
+							,list.get(i).getEventTearm() , list.get(i).getEventTarget(),list.get(i).getEventContent()} ;
+					tableData[i] = temp;
+				}
+				table.setModel(new DefaultTableModel(tableData,ColumnNames));
+
+				frame.repaint();
+
+			}
+		});
+
+
+
+
+
+
+
+		/* String[] columnNames = {"이벤트 코드",
                 "이벤트 명",
                 "기간",
                 "이벤트 대상",
@@ -184,7 +198,7 @@ public class EventModifyFrame extends JPanel {
             };
 
         table = new JTable(data, columnNames){};
-        
+
 		table.setLocation(17, 159);
 		table.setSize(564, 282);
 		table.getColumnModel().getColumn(0).setMaxWidth(141);
@@ -192,21 +206,21 @@ public class EventModifyFrame extends JPanel {
 	    table.getColumnModel().getColumn(0).setWidth(141);
 	    table.setRowHeight(56);
 	    this.setVisible(true);*/
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-     /*   JScrollPane scrollPane = new JScrollPane(table);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		/*   JScrollPane scrollPane = new JScrollPane(table);
 	    scrollPane.setLocation(17, 159);
 	    scrollPane.setSize(564, 318);
 	    scrollPane.setVisible(true);

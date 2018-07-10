@@ -18,6 +18,10 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumnModel;
 
+import controller.totalManageSystem.EventController;
+import model.vo.totalManageSystem.EventGroup;
+import model.vo.totalManageSystem.Product;
+import model.vo.totalManageSystem.ProductGroup;
 import view.totalManageSystem.popUp.ControllPanel;
 import view.totalManageSystem.popUp.MainFrame;
 import view.totalManageSystem.popUp.product.ProductMain;
@@ -27,11 +31,14 @@ import java.awt.Component;
 import java.awt.SystemColor;
 import javax.swing.UIManager;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Date;
 import java.awt.event.ActionEvent;
 import java.awt.ComponentOrientation;
 import javax.swing.JSpinner;
 import javax.swing.JTextArea;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.DropMode;
 
 public class EventModifySub extends JPanel {
@@ -39,17 +46,11 @@ public class EventModifySub extends JPanel {
 	//제목 선언
 	private JLabel title;
 	private JButton addButton;
-	
-	//목록창 선언
-	private JTextField eveCode;
 	private JTextField eveName;
 	private JTextField evePeriod;
 	private JTextField eveDaesang;
 	private JTextField eveGroup;
 	private JTextField eveImage;
-	
-	//입력창 선언
-	private JTextField codeInput;
 	private JTextField nameInput;
 	private JTextField perInput;
 	
@@ -58,13 +59,17 @@ public class EventModifySub extends JPanel {
 	
 	private JLabel eveLabel;
 	
+	private EventController ec = new EventController();
+	private EventGroup e ;
 	
 
-	public EventModifySub(MainFrame frame, ControllPanel mainPanel, String eventCode) {
+	public EventModifySub(MainFrame frame, ControllPanel mainPanel, String eventName) {
 		this.setBounds(0,0,580,600);
 		this.setBackground(Color.WHITE);
 		this.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setLayout(null);
+		this.setLayout(null);
+		
+		e = ec.selectEventOnNames(eventName);
 		
 		//제목(이벤트수정)
 		title = new JLabel("이 벤 트 수 정");
@@ -88,18 +93,6 @@ public class EventModifySub extends JPanel {
 			}
 		});
 		add(addButton);
-		
-		
-	
-		//목록창
-		eveCode = new JTextField();
-		eveCode.setBounds(55, 158, 141, 42);
-		eveCode.setAutoscrolls(false);
-		eveCode.setHorizontalAlignment(SwingConstants.CENTER);
-		eveCode.setText("이벤트 코드");
-		eveCode.setBackground(Color.LIGHT_GRAY);
-		add(eveCode);
-		eveCode.setColumns(10);
 		
 		eveName = new JTextField();
 		eveName.setBounds(55, 199, 141, 42);
@@ -141,26 +134,17 @@ public class EventModifySub extends JPanel {
 		eveImage.setBackground(Color.LIGHT_GRAY);
 		add(eveImage);
 		
-		
-		
-		
-		//입력창
-		codeInput = new JTextField();
-		codeInput.setBounds(195, 158, 328, 42);
-		codeInput.setText(eventCode);
-		codeInput.setEditable(false);
-		codeInput.setColumns(10);
-		this.add(codeInput);
-		
 		nameInput = new JTextField();
+		nameInput.setEnabled(false);
 		nameInput.setBounds(195, 199, 328, 42);
-		nameInput.setText("입력란");
+		nameInput.setText(e.getEventName());
 		nameInput.setColumns(10);
 		add(nameInput);
 	
 		perInput = new JTextField();
+		perInput.setEnabled(false);
 		perInput.setBounds(195, 240, 328, 42);
-		perInput.setText("입력란");
+		perInput.setText(e.getEventTearm() + "");
 		perInput.setColumns(10);
 		add(perInput);
 		
@@ -175,12 +159,25 @@ public class EventModifySub extends JPanel {
 		this.add(DaeBox);
 		
 		//이벤트분류 콤보박스
+		
 		GroBox = new JComboBox();
 		GroBox.setForeground(Color.BLACK);
 		GroBox.setBackground(new Color(255, 255, 255));
-		GroBox.addItem("1+1 행사");
-		GroBox.addItem("2+1 행사");
-		GroBox.addItem("할인 행사");
+
+		if(e.isEventType()==false){
+			GroBox.addItem("10%");
+			GroBox.addItem("20%");
+			GroBox.addItem("30%");
+		}else{
+			GroBox.addItem("1+1 행사");
+			GroBox.addItem("2+1 행사");
+			GroBox.addItem("할인 행사");
+			
+		}
+		
+		
+		
+		
 		GroBox.setBounds(195, 320, 328, 42);
 		this.add(GroBox);
 		
@@ -221,11 +218,48 @@ public class EventModifySub extends JPanel {
 		
 		eveLabel = new JLabel("Event Image");
 		eveLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		eveLabel.setIcon(new ImageIcon("images/totalManageSystem/Pop/event2.png"));
+		eveLabel.setIcon(new ImageIcon(e.getEventImagePath()));
 		eveLabel.setBounds(195, 362, 328, 100);
 		add(eveLabel);
 		
 		
+		
+		reviseButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				boolean etype;
+				 
+				/*String eventName, boolean eventType, String eventContent, Date eventTearm,
+         Object eventTarget, String eventImagePath*/
+				/*if(!GroBox.equals("증정 행사")){
+					etype = false;
+				}else{
+					etype = true;
+					
+				}*/
+				
+//				ec.modifyEventGroup(new EventGroup(nameInput.getText(),etype,nameInput.getText(),perInput.getText()+"",DaeBox.getSelectedItem(),eveLabel.setText(eventName)));
+				JOptionPane.showMessageDialog(null, "수정완료");
+				mainPanel.getMainPanel().removeAll();
+				mainPanel.getMainPanel().add(new EventModifyFrame(frame, mainPanel));
+				mainPanel.repaint();
+			
+				}
+		});
+	
+			
+		
+		
+		deleteButton.addActionListener(new ActionListener() {	
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				ec.deleteEventGroup(e.getEventName());
+				JOptionPane.showMessageDialog(null, "삭제완료");
+				mainPanel.getMainPanel().removeAll();
+				mainPanel.getMainPanel().add(new EventModifyFrame(frame, mainPanel));
+				mainPanel.repaint();
+			}
+		});
 		
 		
 		this.setVisible(true);		

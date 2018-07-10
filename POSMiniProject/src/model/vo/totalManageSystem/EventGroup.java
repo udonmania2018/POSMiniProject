@@ -10,10 +10,10 @@ public class EventGroup implements Serializable{
    private boolean eventType;
    private String eventContent;
    private Date eventTearm;
-   private String eventTarget;
+   private Object eventTarget;
    private String eventImagePath;
    public EventGroup(String eventName, boolean eventType, String eventContent, Date eventTearm,
-         String eventTarget, String eventImagePath) {
+         Object eventTarget, String eventImagePath) {
       super();
       this.eventName = eventName;
       this.eventType = eventType;
@@ -34,7 +34,7 @@ public class EventGroup implements Serializable{
    public Date getEventTearm() {
       return eventTearm;
    }
-   public String getEventTarget() {
+   public Object getEventTarget() {
       return eventTarget;
    }
    public String getEventImagePath() {
@@ -52,7 +52,7 @@ public class EventGroup implements Serializable{
    public void setEventTearm(Date eventTearm) {
       this.eventTearm = eventTearm;
    }
-   public void setEventTarget(String eventTarget) {
+   public void setEventTarget(Object eventTarget) {
       this.eventTarget = eventTarget;
    }
    public void setEventImagePath(String eventImagePath) {
