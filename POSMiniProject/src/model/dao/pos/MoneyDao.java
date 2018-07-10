@@ -93,7 +93,7 @@ public class MoneyDao {
 			moneys = (Moneys) ois.readObject();
 		} catch (EOFException e) {
 			System.out.println("데이터 로드 성공...");
-			return moneys;
+			//return moneys;
 		} catch (FileNotFoundException e) {
 			// 데이터 저장이 처음일 경우 처리
 			return null;
@@ -104,7 +104,7 @@ public class MoneyDao {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return moneys;
+		return null;
 	}
 
 	public void orderProduct(ArrayList<ProductStock> orderList) {
