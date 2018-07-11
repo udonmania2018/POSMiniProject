@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.AbstractCellEditor;
 import javax.swing.DefaultCellEditor;
@@ -17,6 +18,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
@@ -31,6 +33,7 @@ import javax.swing.table.TableCellRenderer;
 
 import controller.pos.POSController;
 import model.vo.pos.ProductStock;
+import model.vo.totalManageSystem.OrderList;
 import model.vo.totalManageSystem.Product;
 import view.ComponentSettings;
 
@@ -43,9 +46,9 @@ public class ProductOrder extends JPanel {
 	private Object data[][];
 	private ArrayList<Product> list;
 	private int sum;
-	private ArrayList<ProductStock> stockList ;
+	private ArrayList<ProductStock> stockList;
 
-	public ProductOrder() {
+	public ProductOrder(JPanel contentPanel) {
 
 		setBorder(new LineBorder(new Color(0, 0, 0)));
 		setBackground(Color.WHITE);
@@ -85,8 +88,7 @@ public class ProductOrder extends JPanel {
 		add(label);
 
 		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(
-				new DefaultComboBoxModel(new String[] { "\uC81C\uD488 \uBA85", "\uC81C\uC870 \uD68C\uC0AC" }));
+		comboBox.setModel(new DefaultComboBoxModel(new String[] { "제품명" }));
 		comboBox.setBounds(176, 39, 80, 36);
 		add(comboBox);
 
@@ -95,6 +97,13 @@ public class ProductOrder extends JPanel {
 		textField.setBounds(270, 39, 200, 36);
 		add(textField);
 		textField.setColumns(10);
+		textField.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				textField.setText("");
+			}
+		});
 
 		txtSum = new JTextField();
 		txtSum.setText("0");
@@ -141,8 +150,9 @@ public class ProductOrder extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Object[] rowData = new Object[6];
-				for (int i = 0; i < dtm1.getRowCount(); i++) {
+				for (int i = 0; i < dtm1.getRowCount();) {
 					dtm1.removeRow(i);
+					System.out.println("실행");
 				}
 				// dtm1.addRow(rowData);
 				list = pc.selectProductOnName(textField.getText());
@@ -159,8 +169,8 @@ public class ProductOrder extends JPanel {
 						rowData[5] = p.getSellByDate();
 						dtm1.addRow(rowData);
 					}
-					data[cnt][5] =  p.getSellByDate();
-					cnt ++;
+					data[cnt][5] = p.getSellByDate();
+					cnt++;
 				}
 			}
 		});
@@ -257,20 +267,16 @@ public class ProductOrder extends JPanel {
 			@Override
 			public boolean isCellEditable(int row, int column) {
 				// TODO Auto-generated method stub
-				if (column == 3) {
-					return true;
-				} else {
-					return false;
-				}
+				return false;
 			}
 		};
-		//ArrayList<ArrayList<Product>> list = pc.selectStock();
-		
+		// ArrayList<ArrayList<Product>> list = pc.selectStock();
+
 		order_table = new JTable();
 		order_table.setFont(new Font("함초롱돋움", Font.PLAIN, 26));
 		order_table.setModel(dtm);
 		order_table.getTableHeader().setFont(new Font("맑은 고딕", Font.BOLD, 20));
-		order_table.setFont(new Font("함초롱돋움", Font.PLAIN, 16));
+		order_table.setFont(new Font("맑은 고딕", Font.PLAIN, 16));
 		order_table.setRowHeight(37);
 		order_table.getColumnModel().getColumn(0).setPreferredWidth(40);
 		order_table.getColumnModel().getColumn(1).setPreferredWidth(160);
@@ -288,6 +294,9 @@ public class ProductOrder extends JPanel {
 				// TODO Auto-generated method stub
 				int check = order_table.getColumnCount() - 1;
 				if (order_table.getSelectedColumn() == check) {
+					Object tempPrice = order_table.getValueAt(order_table.getSelectedRow(), 2);
+					int resultPrice = Integer.parseInt(txtSum.getText()) - Integer.parseInt(tempPrice.toString());
+					txtSum.setText(resultPrice + "");
 					dtm.removeRow(order_table.getSelectedRow());
 				}
 
@@ -296,6 +305,8 @@ public class ProductOrder extends JPanel {
 		});
 		scrollPane_1.setViewportView(order_table);
 		scrollPane_1.setBounds(700, 118, 475, 260);
+		scrollPane_1.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+		scrollPane_1.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		add(scrollPane_1);
 
 		JButton orderendbtn = new JButton(new ImageIcon("images/buttonsImages/OK_ICON.PNG"));
@@ -325,7 +336,11 @@ public class ProductOrder extends JPanel {
 							for (int k = 0; k < data[i].length - 1; k++) {
 								tmpData[cnt][k] = check_table.getValueAt(i, k);
 							}
-							tmpData[cnt][5] = data[i][5];	
+							if(!tmpData[cnt][2].toString().matches("^[0-9]*$") || tmpData[cnt][2].equals("")){
+								JOptionPane.showMessageDialog(null, "숫자만 입력 가능합니다. 또는 공백이 있나 확인해주세요.");
+								return;
+							}
+							tmpData[cnt][5] = data[i][5];
 							cnt++;
 						}
 					}
@@ -346,58 +361,63 @@ public class ProductOrder extends JPanel {
 					if (order_table.getRowCount() == 0) {
 						// 체크를 통해 넘겨받은 값 테이블에 저장
 						for (int i = 0; i < basketData.length; i++) {
-							Object[] rowData = new Object[6];
-							rowData[0] = basketData[i][0];
-							rowData[1] = basketData[i][1];
-							rowData[2] = Integer.parseInt(basketData[i][2].toString())
-									* Integer.parseInt(basketData[i][3].toString());
-							int quantity = 0;
-							for (int j = 0; j < stockList.size(); j++) {
-								if(stockList.get(j).getBarcode().equals(basketData[i][0].toString())){
-									quantity += stockList.get(j).getQuantity();
+							if (!basketData[i][2].toString().equals("0") || basketData[i][2] != "" ) {
+								Object[] rowData = new Object[6];
+								rowData[0] = basketData[i][0];
+								rowData[1] = basketData[i][1];
+								rowData[2] = Integer.parseInt(basketData[i][2].toString())
+										* Integer.parseInt(basketData[i][3].toString());
+								int quantity = 0;
+								for (int j = 0; j < stockList.size(); j++) {
+									if (stockList.get(j).getBarcode().equals(basketData[i][0].toString())) {
+										quantity += stockList.get(j).getQuantity();
+									}
 								}
+								rowData[3] = quantity;
+								rowData[4] = basketData[i][2];
+								rowData[5] = basketData[i][5];
+								dtm.addRow(rowData);
 							}
-							rowData[3] = quantity;
-							rowData[4] = basketData[i][2];
-							rowData[5] = basketData[i][5];
-							dtm.addRow(rowData);
 						}
 					} else { // 오른쪽 테이블의 값이 기존에 있을 경우
 						for (int j = 0; j < basketData.length; j++) {
 							// 기존 테이블과 값이 겹치지 않을경우 해당 값을 테이블에 넣기 위해서 boolean으로
 							// 유효성 체크
-							boolean addRow = false;
-							for (int i = 0; i < order_table.getRowCount(); i++) {
-								// 오른쪽 테이블의 기존값이 추가될 값이랑 일치할 경우 = 같은 제품을 또 추가할
-								// 경우
-								if (order_table.getValueAt(i, 0).toString().equals(basketData[j][0].toString())) {
-									// 기존 테이블의 값 수정
-									Object orderNum = Integer.parseInt(order_table.getValueAt(i, 4).toString())
-											+ Integer.parseInt(basketData[j][2].toString());
-									Object orderPrice = Integer.parseInt(orderNum.toString())
-											* Integer.parseInt(basketData[j][3].toString());
-									order_table.setValueAt(orderNum, i, 4);
-									order_table.setValueAt(orderPrice, i, 2);
+							if (!basketData[j][2].toString().equals("0") ||  basketData[j][2] != "") {
+								boolean addRow = false;
+								for (int i = 0; i < order_table.getRowCount(); i++) {
+									// 오른쪽 테이블의 기존값이 추가될 값이랑 일치할 경우 = 같은 제품을 또
+									// 추가할
+									// 경우
+									if (order_table.getValueAt(i, 0).toString().equals(basketData[j][0].toString())) {
+										// 기존 테이블의 값 수정
+										Object orderNum = Integer.parseInt(order_table.getValueAt(i, 4).toString())
+												+ Integer.parseInt(basketData[j][2].toString());
+										Object orderPrice = Integer.parseInt(orderNum.toString())
+												* Integer.parseInt(basketData[j][3].toString());
+										order_table.setValueAt(orderNum, i, 4);
+										order_table.setValueAt(orderPrice, i, 2);
 
-									addRow = true;
-								}
-							}
-							if (!addRow) {
-								Object[] rowData = new Object[6];
-								rowData[0] = basketData[j][0];
-								rowData[1] = basketData[j][1];
-								rowData[2] = Integer.parseInt(basketData[j][2].toString())
-										* Integer.parseInt(basketData[j][3].toString());
-								int quantity = 0;
-								for (int k = 0; k < stockList.size(); k++) {
-									if(stockList.get(k).getBarcode().equals(basketData[j][0].toString())){
-										quantity += stockList.get(k).getQuantity();
+										addRow = true;
 									}
 								}
-								rowData[3] = quantity;
-								rowData[4] = basketData[j][2];
-								rowData[5] = basketData[j][5];
-								dtm.addRow(rowData);
+								if (!addRow) {
+									Object[] rowData = new Object[6];
+									rowData[0] = basketData[j][0];
+									rowData[1] = basketData[j][1];
+									rowData[2] = Integer.parseInt(basketData[j][2].toString())
+											* Integer.parseInt(basketData[j][3].toString());
+									int quantity = 0;
+									for (int k = 0; k < stockList.size(); k++) {
+										if (stockList.get(k).getBarcode().equals(basketData[j][0].toString())) {
+											quantity += stockList.get(k).getQuantity();
+										}
+									}
+									rowData[3] = quantity;
+									rowData[4] = basketData[j][2];
+									rowData[5] = basketData[j][5];
+									dtm.addRow(rowData);
+								}
 							}
 						}
 					}
@@ -405,18 +425,33 @@ public class ProductOrder extends JPanel {
 				} // else의 끝
 			}
 		});
-		
+
 		orderendbtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				ArrayList<ProductStock> orderList = new ArrayList<ProductStock>();
-				for (int i = 0; i <  order_table.getRowCount(); i++) {
-					ProductStock temp = new ProductStock(order_table.getValueAt(i, 0).toString(), Integer.parseInt(order_table.getValueAt(i, 4).toString()), null);
+				ArrayList<OrderList> orderList2 = new ArrayList<OrderList>();
+				for (int i = 0; i < order_table.getRowCount(); i++) {
+					ProductStock temp = new ProductStock(order_table.getValueAt(i, 0).toString(),
+							Integer.parseInt(order_table.getValueAt(i, 4).toString()), null,
+							order_table.getValueAt(i, 1).toString());
 					temp.setSellByDate(order_table.getValueAt(i, 5).toString());
 					orderList.add(temp);
+
+					OrderList ol = new OrderList("역삼점", order_table.getValueAt(i, 0).toString(),
+							Integer.parseInt(order_table.getValueAt(i, 4).toString()), new Date());
+					orderList2.add(ol);
 				}
 				pc.orderProduct(orderList);
+				pc.addOrderList(orderList2);
+
+				contentPanel.removeAll();
+				contentPanel.add(new POSMainCenterMenu());
+				contentPanel.repaint();
+				synchronized (POSMainFrame.eventSwipe) {
+					POSMainFrame.eventSwipe.resume();
+				}
 			}
 		});
 

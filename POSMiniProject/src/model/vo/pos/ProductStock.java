@@ -3,21 +3,23 @@ package model.vo.pos;
 import java.io.Serializable;
 
 public class ProductStock implements Serializable {
-	
+
 	private String barcode;
 	private int quantity;
 	private String barcodePath;
-	private String sellByDate ;
-	
-	public ProductStock() { }
+	private String ProductName;
+	private String sellByDate;
 
-	public ProductStock(String barcode, int quantity, String barcodePath) {
+	public ProductStock() {
+	}
+
+	public ProductStock(String barcode, int quantity, String barcodePath, String ProductName) {
 		super();
 		this.barcode = barcode;
 		this.quantity = quantity;
 		this.barcodePath = barcodePath;
+		this.ProductName = ProductName;
 	}
-
 
 	public int getQuantity() {
 		return quantity;
@@ -56,7 +58,12 @@ public class ProductStock implements Serializable {
 		this.sellByDate = sellByDate;
 	}
 
+	public String getProductName() {
+		return ProductName;
+	}
 
-	
-	
+	public void setProductName(String productName) {
+		ProductName = productName;
+	}
+
 }

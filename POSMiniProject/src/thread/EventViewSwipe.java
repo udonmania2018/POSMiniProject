@@ -2,6 +2,7 @@ package thread;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import view.pos.swipe.POSMainCenterMenu;
@@ -23,6 +24,10 @@ public class EventViewSwipe extends Thread {
 				cnt = 0;
 			}
 			panel.getEventImage().setIcon(icons[cnt]);
+/*			
+			new JLabel(new ImageIcon("images/pos/Event.png"));
+			eventImage.setBounds(800, 0, 400, 150);*/
+			panel.repaint();
 			frame.repaint();
 			
 			try {

@@ -19,6 +19,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
@@ -101,12 +102,14 @@ public class ProductSelect extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				System.out.println("검색 실행");
 
-				String searchName = textField.getText(); // 그냥 textField라 하면 주소 가져옴
+				String searchName = textField.getText(); // 그냥 textField라 하면 주소
+															// 가져옴
 
 				// 빈 객체를 생성하지 말고 searchName을 매개변수로 pcr에 넘겨서 바로 객체를 생성하도록
 				ArrayList<Product> list = pcr.selectProductOnName(searchName);
 
-				data = new Object[list.size()][colNames.length]; // data 배열의 크기를 초기화
+				data = new Object[list.size()][colNames.length]; // data 배열의 크기를
+																	// 초기화
 
 				// 다른 객체를 생성해서 주소를 대입하는 방식으로 하면 편하다. 싫다면 이중 for문 data[i][j]로
 				// 넣을 수도 있다.
@@ -127,7 +130,7 @@ public class ProductSelect extends JPanel {
 						}
 					}
 				});
-				
+
 				DefaultTableCellRenderer dcr = new DefaultTableCellRenderer() {
 					@Override
 					public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
@@ -155,92 +158,102 @@ public class ProductSelect extends JPanel {
 				repaint();
 			}
 		});
-		
+
 		// 확인버튼. 비고가 true인 항목을 장바구니로 이동
 		JButton enterbtn = new JButton(new ImageIcon("images/buttonsImages/OK_ICON.PNG"));
 		enterbtn.setBounds(555, 39, 100, 40);
 		enterbtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-	            // 왼쪽 테이블이 없을 때 유효성 검사
-	            if (data == null) {
-	               // nothing to do
-	               System.out.println("data는 null");
-	            } else {
-	               // 배열의 크기를 위한 cnt변수 선언
-	               int cnt = 0;
-	               // 왼쪽 테이블의 값을 복제할 배열
-	               Object tmpData[][] = new Object[data.length][data[0].length];
-	               for (int i = 0; i < check_table.getRowCount(); i++) {
-	                  // 왼쪽 테이블에서 check된 값들만 배열에 저장
-	                  boolean check = (boolean) check_table.getValueAt(i, 4);
-	                  if (check) {
-	                     for (int k = 0; k < data[i].length - 1; k++) {
-	                        tmpData[cnt][k] = check_table.getValueAt(i, k);
-	                     }
-	                     cnt++;
-	                  }
-	               }
-	               // 체크된 갯수 만큼만 배열 선언
-	               basketData = new Object[cnt][tmpData[0].length - 1];
+				// 왼쪽 테이블이 없을 때 유효성 검사
+				if (data == null) {
+					// nothing to do
+					System.out.println("data는 null");
+				} else {
+					// 배열의 크기를 위한 cnt변수 선언
+					int cnt = 0;
+					// 왼쪽 테이블의 값을 복제할 배열
+					Object tmpData[][] = new Object[data.length][data[0].length];
+					for (int i = 0; i < check_table.getRowCount(); i++) {
+						// 왼쪽 테이블에서 check된 값들만 배열에 저장
+						boolean check = (boolean) check_table.getValueAt(i, 4);
+						if (check) {
+							for (int k = 0; k < data[i].length - 1; k++) {
+								tmpData[cnt][k] = check_table.getValueAt(i, k);
+							}
+							
+							if(!tmpData[cnt][2].toString().matches("^[0-9]*$") || tmpData[cnt][2].equals("")){
+								JOptionPane.showMessageDialog(null, "숫자만 입력 가능합니다. 또는 공백이 있나 확인해주세요.");
+								return;
+							}
+							
+							cnt++;
+						}
+					}
+					// 체크된 갯수 만큼만 배열 선언
+					basketData = new Object[cnt][tmpData[0].length - 1];
 
-	               // 체크된 배열의 값 basketData에 복사
-	               for (int z = 0; z < basketData.length; z++) {
-	                  for (int x = 0; x < basketData[z].length; x++) {
-	                     basketData[z][x] = tmpData[z][x];
-	                  }
-	                  // 아래 sum 관련 코드는 합계값이 필요할때
-	                  // sum += Integer.parseInt(basketData[z][2].toString())
-	                  //      * Integer.parseInt(basketData[z][3].toString());
-	               }
-	               
-	               // 합계 설정
-	               // txtSum.setText(sum + "");
+					// 체크된 배열의 값 basketData에 복사
+					for (int z = 0; z < basketData.length; z++) {
+						for (int x = 0; x < basketData[z].length; x++) {
+							basketData[z][x] = tmpData[z][x];
+						}
+						// 아래 sum 관련 코드는 합계값이 필요할때
+						// sum += Integer.parseInt(basketData[z][2].toString())
+						// * Integer.parseInt(basketData[z][3].toString());
+					}
 
-	               // 오른쪽 테이블이 1개도 없을 경우 = 첫시작
-	               if (jtable.getRowCount() == 0) {
-	                  // 체크를 통해 넘겨받은 값 테이블에 저장
-	                  for (int i = 0; i < basketData.length; i++) {
-	                     Object[] rowData = new Object[4];
-	                     rowData[0] = basketData[i][0];
-	                     rowData[1] = basketData[i][1];
-	                     rowData[2] = basketData[i][2];
-	                     rowData[3] = basketData[i][3];
-	                     dtm.addRow(rowData);
-	                  }
-	               } else { // 오른쪽 테이블의 값이 기존에 있을 경우
-	                  for (int j = 0; j < basketData.length; j++) {
-	                     // 기존 테이블과 값이 겹치지 않을경우 해당 값을 테이블에 넣기 위해서 boolean으로
-	                     // 유효성 체크
-	                     boolean addRow = false;
-	                     for (int i = 0; i < jtable.getRowCount(); i++) {
-	                        // 오른쪽 테이블의 기존값이 추가될 값이랑 일치할 경우 = 같은 제품을 또 추가할
-	                        // 경우
-	                        if (jtable.getValueAt(i, 0).toString().equals(basketData[j][0].toString())) {
-	                           // 기존 테이블의 값 수정
-	                           Object orderNum = Integer.parseInt(jtable.getValueAt(i, 2).toString())
-	                                 + Integer.parseInt(basketData[j][2].toString());
-	                           Object orderPrice = Integer.parseInt(orderNum.toString())
-	                                 * Integer.parseInt(basketData[j][3].toString());
-	                           jtable.setValueAt(orderNum, i, 2);
-	                           jtable.setValueAt(orderPrice, i, 3);
-	                           addRow = true;
-	                        }
-	                     }
-	                     if (!addRow) {
-	                        Object[] rowData = new Object[4];
-	                        rowData[0] = basketData[j][0];
-	                        rowData[1] = basketData[j][1];
-	                        rowData[2] = basketData[j][2];
-	                        rowData[3] = basketData[j][3];
-	                        dtm.addRow(rowData);
-	                     }
-	                  }
-	               } // else 블럭의 끝
-	               repaint();
-	            } 
-	         }
-	      });
-		
+					// 합계 설정
+					// txtSum.setText(sum + "");
+
+					// 오른쪽 테이블이 1개도 없을 경우 = 첫시작
+					if (jtable.getRowCount() == 0) {
+						// 체크를 통해 넘겨받은 값 테이블에 저장
+						for (int i = 0; i < basketData.length; i++) {
+							if (!basketData[i][2].toString().equals("0") || basketData[i][2] != "") {
+								Object[] rowData = new Object[4];
+								rowData[0] = basketData[i][0];
+								rowData[1] = basketData[i][1];
+								rowData[2] = basketData[i][2];
+								rowData[3] = basketData[i][3];
+								dtm.addRow(rowData);
+							}
+						}
+					} else { // 오른쪽 테이블의 값이 기존에 있을 경우
+						for (int j = 0; j < basketData.length; j++) {
+							// 기존 테이블과 값이 겹치지 않을경우 해당 값을 테이블에 넣기 위해서 boolean으로
+							if (!basketData[j][2].toString().equals("0")||basketData[j][2] != "") {
+								boolean addRow = false;
+								for (int i = 0; i < jtable.getRowCount(); i++) {
+									// 오른쪽 테이블의 기존값이 추가될 값이랑 일치할 경우 = 같은 제품을 또
+									// 추가할
+									// 경우
+									if (jtable.getValueAt(i, 0).toString().equals(basketData[j][0].toString())) {
+										// 기존 테이블의 값 수정
+										Object orderNum = Integer.parseInt(jtable.getValueAt(i, 2).toString())
+												+ Integer.parseInt(basketData[j][2].toString());
+										Object orderPrice = Integer.parseInt(orderNum.toString())
+												* Integer.parseInt(basketData[j][3].toString());
+										jtable.setValueAt(orderNum, i, 2);
+										jtable.setValueAt(orderPrice, i, 3);
+										addRow = true;
+									}
+								}
+								if (!addRow) {
+									Object[] rowData = new Object[4];
+									rowData[0] = basketData[j][0];
+									rowData[1] = basketData[j][1];
+									rowData[2] = basketData[j][2];
+									rowData[3] = basketData[j][3];
+									dtm.addRow(rowData);
+								}
+							}
+						}
+					} // else 블럭의 끝
+					repaint();
+				}
+			}
+		});
+
 		add(enterbtn);
 
 		searchbtn.setBounds(490, 39, 50, 40);
@@ -314,14 +327,14 @@ public class ProductSelect extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				// 계산대로 버튼의 동작 지정
 				System.out.println("계산대로");
-				System.out.println(basketData[0][0]); // 왜 null?				
+				System.out.println(basketData[0][0]); // 왜 null?
 				POSMainFrame.staticData = basketData;
 				System.out.println(POSMainFrame.staticData[0][0]);
 				removeAll();
 				add(new POSMainCenterMenu());
 				repaint();
 				synchronized (POSMainFrame.eventSwipe) {
-				POSMainFrame.eventSwipe.resume();
+					POSMainFrame.eventSwipe.resume();
 				}
 			}
 		});

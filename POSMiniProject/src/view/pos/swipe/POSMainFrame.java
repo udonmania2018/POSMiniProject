@@ -16,12 +16,13 @@ public class POSMainFrame extends JFrame {
 	private POSMainCenterMenu centerMenu = new POSMainCenterMenu();
 	public static Thread eventSwipe ;
 	public static Object[][] staticData;
+	public static int[] counterMoneys = {5,10,20,40,100,500,1000,1000};
 	
 	public POSMainFrame() {
 		getContentPane().setLayout(null);
 		this.setBounds(400, 400, 1200, 640);
 		this.setResizable(false); // 창 크기 변경 불가
-
+		
 		contentPane = new JPanel();
 		contentPane.setLayout(null);
 		contentPane.setBounds(0, 0, 1200, 600);
@@ -37,14 +38,15 @@ public class POSMainFrame extends JFrame {
 		contentPane.add(upMenu);
 		upMenu.setBounds(0, 0, 1200, 100);
 		upMenu.setLayout(null);
-		eventSwipe = new EventViewSwipe(centerMenu,this);
-		eventSwipe.start();
+		
 
 		POSMainBottomMenu bottomMenu = new POSMainBottomMenu(centerMenu);
 		bottomMenu.setBounds(0, 500, 1200, 100);
 		contentPane.add(bottomMenu);
 		bottomMenu.setLayout(null);
 
+		eventSwipe = new EventViewSwipe(centerMenu,this);
+		eventSwipe.start();
 		// 중앙정렬
 		Dimension frameSize = this.getSize();
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
