@@ -12,6 +12,7 @@ import java.awt.event.WindowEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
@@ -121,6 +122,10 @@ public class GroupManage extends JFrame {
 				public void actionPerformed(ActionEvent e) {
 					// 제품 분류 DB에 추가 처리 기능
 					if (groupCheck.equals("product")) {
+						if(!nameTxt.getText().matches("^[a-zA-Z0-9]*$")){
+							JOptionPane.showMessageDialog(null, "영문자 및 숫자로 입력해주세요.");
+							return;
+						}
 						ProductGroup pg = new ProductGroup((codTxt.getText()), nameTxt.getText());
 						pct.addProductGroup(pg);
 					} else if (groupCheck.equals("manufacturer")) {
@@ -150,6 +155,10 @@ public class GroupManage extends JFrame {
 				public void actionPerformed(ActionEvent e) {
 					// TODO Auto-generated method stub
 					if (groupCheck.equals("product")) {
+						if(!nameTxt.getText().matches("^[a-zA-Z0-9]*$")){
+							JOptionPane.showMessageDialog(null, "영문자 및 숫자로 입력해주세요.");
+							return;
+						}
 						ProductGroup pg = new ProductGroup((codTxt.getText()), nameTxt.getText());
 						pct.modifyProductGroup(pg);
 					} else if (groupCheck.equals("manufacturer")) {

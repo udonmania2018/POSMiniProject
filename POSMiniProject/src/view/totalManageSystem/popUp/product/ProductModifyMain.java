@@ -146,7 +146,9 @@ public class ProductModifyMain extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				ArrayList<Product> list = pct.selectProductOnName(textField.getText());
-				
+				if(list == null){
+					return;
+				}
 				Object[][] tableData = new Object[list.size()][4];
 				
 				for (int i = 0; i < list.size(); i++) {

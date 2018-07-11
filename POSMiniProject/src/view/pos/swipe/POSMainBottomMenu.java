@@ -94,7 +94,7 @@ public class POSMainBottomMenu extends JPanel {
 				if (e.getSource() == orderBtn) {
 
 					contentPanel.removeAll();
-					contentPanel.add(new ProductOrder());
+					contentPanel.add(new ProductOrder(contentPanel));
 					contentPanel.repaint();
 					POSMainFrame.eventSwipe.suspend();
 
@@ -112,7 +112,7 @@ public class POSMainBottomMenu extends JPanel {
 				if (e.getSource() == scrapBtn) {
 
 					contentPanel.removeAll();
-					contentPanel.add(new ProductScrap());
+					contentPanel.add(new ProductScrap(contentPanel));
 					contentPanel.repaint();
 					POSMainFrame.eventSwipe.suspend();
 				}

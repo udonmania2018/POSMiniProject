@@ -116,15 +116,17 @@ public class POSMainUpperMenu extends JPanel implements ActionListener {
 					if (contentPanel instanceof POSMainCenterMenu) {
 						// contentPanel.remove(((POSMainCenterMenu)
 						// contentPanel).getScrollPane2());
+						contentPanel.removeAll();
 						contentPanel.remove(((POSMainCenterMenu) contentPanel).getScrollPane3());
 						Payment temp = new Payment();
 						temp.setLocation(800, 200);
 						temp.setOpaque(false);
 						contentPanel.add(temp);
-						contentPanel.repaint();
 						synchronized (POSMainFrame.eventSwipe) {
 							POSMainFrame.eventSwipe.suspend();
+
 						}
+						contentPanel.setVisible(true);
 					}
 					// System.out.println("결제 버튼 처리 OK");
 				} else if (e.getSource() == sosBtn) {
@@ -132,7 +134,7 @@ public class POSMainUpperMenu extends JPanel implements ActionListener {
 				} else if (e.getSource() == pauseBtn) {
 					JOptionPane.showMessageDialog(null, "현재 내용이 보류되었습니다.", "보류", JOptionPane.WARNING_MESSAGE);
 				} else if (e.getSource() == safeBtn) {
-					SafeMoney sm = new SafeMoney();
+					SafeMoney sm = new SafeMoney(safeMoneyframe);
 					safeMoneyframe.add(sm);
 					safeMoneyframe.setVisible(true);
 					safeMoneyframe.setSize(621, 400);

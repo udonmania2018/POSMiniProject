@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Scanner;
 
+import demo.First;
 import model.vo.pos.ProductStock;
 
 public class AddProduct {
@@ -35,7 +36,7 @@ public class AddProduct {
 			}
 		}
 		// 유효성 검사 값 처리
-		int effectivenessNum = 10 - (oddNumSum + (3*evenNumSum)) % 10;
+		int effectivenessNum = 9 - (oddNumSum + (3*evenNumSum)) % 10;
 		
 		
 		String check = productStock.getSellByDate().substring(0,1);
@@ -51,9 +52,11 @@ public class AddProduct {
 
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
-	
+		
 		String first = productStock.getSellByDate().substring(1,3);
 		String second = productStock.getSellByDate().substring(3);
+		System.out.println(first);
+		System.out.println(second);
 		if(check.equals("1")){
 			cal.add(Calendar.YEAR, Integer.parseInt(first));
 			cal.add(Calendar.MONTH, Integer.parseInt(second));
@@ -63,8 +66,8 @@ public class AddProduct {
 			cal.add(Calendar.DATE, Integer.parseInt(second));
 		}
 			
-		String strDate2 = df.format(date.getTime());
-
+		String strDate2 = df.format(cal.getTime());
+		System.out.println(strDate2);
 		// 입력 받은 값에 유효성 검사 문자열 추가
 		tempStr += String.valueOf(effectivenessNum) + check+strDate2;
 
