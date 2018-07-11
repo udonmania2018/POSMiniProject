@@ -150,8 +150,6 @@ public class EventModifyFrame extends JPanel {
 		comboBox.setForeground(Color.BLACK);
 		comboBox.setBackground(new Color(255, 255, 255));
 		comboBox.addItem("이벤트명");
-		comboBox.addItem("이벤트기간");
-		comboBox.addItem("이벤트분류");
 		comboBox.setBounds(110, 110, 96, 35);
 		this.add(comboBox);
 

@@ -347,7 +347,7 @@ public class ProductMain extends JPanel {
 						textField_1.setText("");
 						textField_3.setText("");
 						textField_4.setText("");
-
+						JOptionPane.showMessageDialog(null, "제품이 추가 되었습니다.");
 					} else {
 						JOptionPane.showMessageDialog(null, "제품가격과 발주가격은 숫자만 입력 가능합니다. \n확인해 주세요");
 					}

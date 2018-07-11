@@ -96,17 +96,6 @@ public class Event {
 		for (int i = 0; i < list.size(); i++) {
 			if (list.get(i).getEventName().equals(eg)) {
 				list.remove(i);
-				for (int j = i; j < list.size(); j++) {
-					int temp = Integer.parseInt(list.get(j).getEventName());
-					temp--;
-					String saveCode = "";
-					if (temp < 10) {
-						saveCode = "0" + temp;
-					} else {
-						saveCode = temp + "";
-					}
-					list.get(j).setEventName(saveCode);
-					}
 				break;
 			}
 		}
@@ -189,10 +178,11 @@ public class Event {
 		ArrayList<EventGroup> list = selectEventGroup();
 		for (int i = 0; i < list.size(); i++) {
 			if (list.get(i).getEventName().equals(eg.getEventName())) {
-				list.get(i).setEventName(eg.getEventName());
+				list.remove(i);
 				break;
 			}
 		}
+		list.add(eg);
 		try (ObjectOutputStream oos = new ObjectOutputStream(
 				new FileOutputStream(checkdir.getPath() + "\\eventGroup.dat"))) {
 			for (int i = 0; i < list.size(); i++) {

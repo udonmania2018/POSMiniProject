@@ -4,9 +4,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Scanner;
 
-import demo.First;
 import model.vo.pos.ProductStock;
 
 public class AddProduct {

@@ -22,7 +22,8 @@ public class EventController {
 	public ArrayList<EventGroup> selectEventOnName(String searchName){
 		return dao.selectEventOnName(searchName);
 	}
-public EventGroup selectEventOnNames(String searchName){
+
+	public EventGroup selectEventOnNames(String searchName){
 		
 		return dao.selectEventOnNames(searchName);
 	}
