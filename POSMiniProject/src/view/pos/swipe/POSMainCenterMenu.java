@@ -77,8 +77,9 @@ public class POSMainCenterMenu extends JPanel {
       table.getTableHeader().setFont(new Font("¸¼Àº°íµñ",Font.BOLD,30));
       if(POSMainFrame.staticData != null){
          for(int i = 0; i<POSMainFrame.staticData.length;i++){
-            int j = Integer.parseInt(table.getValueAt(i, 2).toString());
-            int h = Integer.parseInt(table.getValueAt(i, 3).toString());
+            int j = Integer.parseInt(table.getValueAt(i, 3).toString());
+            int h = Integer.parseInt(table.getValueAt(i, 4).toString());
+//            table.setValueAt(aValue, row, column);
             table.setValueAt(j*h, i, 4);
          }
          
