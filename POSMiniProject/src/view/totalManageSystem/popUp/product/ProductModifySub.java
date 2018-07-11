@@ -47,20 +47,20 @@ public class ProductModifySub extends JPanel {
 	private JComboBox comboDate;
 	private JComboBox monthday;
 	private JComboBox yearmonth;
-	
+
 	private ProductController pc = new ProductController();
-	private Product p ;
+	private Product p;
 	private JTextField textField;
 	private JTextField textField_1;
 
 	public ProductModifySub(MainFrame frame, ControllPanel mainPanel, String productCode) {
-		this.setBounds(0,0,580,600);
+		this.setBounds(0, 0, 580, 600);
 		this.setBackground(Color.WHITE);
 		this.setBorder(new EmptyBorder(5, 5, 5, 5));
 		this.setLayout(null);
-		
+
 		p = pc.selectProductOnCode(productCode);
-		
+
 		// 제목(제품수정)
 		title = new JLabel("제 품 수 정");
 		title.setFont(new Font("함초롬돋움", Font.PLAIN, 30));
@@ -169,8 +169,6 @@ public class ProductModifySub extends JPanel {
 		deleteButton.setBorderPainted(false); // 버튼 테두리 설정해제
 		deleteButton.setBounds(247, 470, 100, 40); // 버튼 크기 지정
 		add(deleteButton);
-		
-		
 
 		// 취소버튼
 		JButton backButton;
@@ -178,7 +176,7 @@ public class ProductModifySub extends JPanel {
 		backButton.setBorderPainted(false); // 버튼 테두리 설정해제
 		backButton.setBounds(423, 470, 100, 40); // 버튼 크기 지정
 		backButton.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
@@ -194,55 +192,52 @@ public class ProductModifySub extends JPanel {
 		label.setHorizontalAlignment(SwingConstants.CENTER);
 		label.setBounds(0, 86, 580, 50);
 		add(label);
-		
-		//제품분류 콤보박스
+
+		// 제품분류 콤보박스
 		JComboBox catInput = new JComboBox();
 		catInput.setForeground(Color.BLACK);
 		catInput.setBackground(new Color(255, 255, 255));
-		
+
 		// ArrayList 선언 및 ManufactureGroup 제네릭스
 		ArrayList<ProductGroup> list = pc.selectProductGroup();
-		for(int i = 0; i < list.size(); i++) {
-			catInput.addItem(list.get(i).getProductGroupName());	
+		for (int i = 0; i < list.size(); i++) {
+			catInput.addItem(list.get(i).getProductGroupName());
 		}
-		
+
 		int tempcode = Integer.parseInt(p.getProductGroupCode());
 		System.out.println("Tempcode = " + tempcode);
-		for(int i = 0; i < catInput.getItemCount(); i++){
-			if(i == tempcode - 1){
+		for (int i = 0; i < catInput.getItemCount(); i++) {
+			if (i == tempcode - 1) {
 				catInput.setSelectedIndex(i);
 				break;
 			}
 		}
 		catInput.setBounds(195, 158, 328, 42);
 		add(catInput);
-		
+
 		JComboBox nameInput = new JComboBox();
-		
-		
+
 		nameInput.setForeground(Color.BLACK);
 		nameInput.setBackground(new Color(255, 255, 255));
-		
+
 		// manufacturegroupname
 		ArrayList<ManufactureGroup> list2 = pc.selectManufacturerGroup();
 		for (int i = 0; i < list2.size(); i++) {
 			nameInput.addItem(list2.get(i).getManufactureGroupName());
 		}
-		
+
 		tempcode = Integer.parseInt(p.getManufacturerCode());
 		System.out.println("Tempcode = " + tempcode);
-		for(int i = 0; i < nameInput.getItemCount(); i++){
-			if(i == tempcode - 1){
+		for (int i = 0; i < nameInput.getItemCount(); i++) {
+			if (i == tempcode - 1) {
 				nameInput.setSelectedIndex(i);
 				break;
 			}
 		}
-		
-		
+
 		nameInput.setBounds(195, 278, 328, 42);
 		add(nameInput);
-		
-		
+
 		comboDate = new JComboBox();
 		comboDate.setModel(new DefaultComboBoxModel(new String[] { "년/개월", "개월/일" }));
 		comboDate.setBounds(195, 319, 110, 42);
@@ -257,9 +252,9 @@ public class ProductModifySub extends JPanel {
 		add(yearmonth);
 
 		monthday.setModel(new DefaultComboBoxModel(
-				new String[] {"00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12" }));
-		yearmonth.setModel(new DefaultComboBoxModel(new String[] { "00","01", "02", "03", "04", "05" }));
-		
+				new String[] { "00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12" }));
+		yearmonth.setModel(new DefaultComboBoxModel(new String[] { "00", "01", "02", "03", "04", "05" }));
+
 		textField = new JTextField();
 		textField.setText("\uBC1C\uC8FC \uAC00\uACA9");
 		textField.setHorizontalAlignment(SwingConstants.CENTER);
@@ -268,13 +263,13 @@ public class ProductModifySub extends JPanel {
 		textField.setBounds(55, 400, 141, 42);
 		textField.setEditable(false);
 		add(textField);
-		
+
 		textField_1 = new JTextField();
 		textField_1.setText("0");
 		textField_1.setColumns(10);
 		textField_1.setBounds(195, 400, 328, 42);
 		add(textField_1);
-		textField_1.setText(p.getOrderPrice()+"");
+		textField_1.setText(p.getOrderPrice() + "");
 
 		Calendar c = Calendar.getInstance();
 		comboDate.addItemListener(new ItemListener() {
@@ -284,27 +279,26 @@ public class ProductModifySub extends JPanel {
 				Object a = e.getItem();
 
 				if (comboDate.getSelectedIndex() == 0) {
-					monthday.setModel(new DefaultComboBoxModel(
-							new String[] { "00","01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12" }));
+					monthday.setModel(new DefaultComboBoxModel(new String[] { "00", "01", "02", "03", "04", "05", "06",
+							"07", "08", "09", "10", "11", "12" }));
 					yearmonth.setModel(new DefaultComboBoxModel(new String[] { "01", "02", "03", "04", "05" }));
 					frame.repaint();
 					frame.setVisible(true);
 				}
 				if (comboDate.getSelectedIndex() == 1) {
-					monthday.setModel(new DefaultComboBoxModel(new String[] { "00","01", "02", "03", "04", "05", "06", "07",
-							"08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22",
-							"23", "24", "25", "26", "27", "28", "29", "30", "31" }));
-					yearmonth.setModel(new DefaultComboBoxModel(
-							new String[] {"00" ,"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12" }));
+					monthday.setModel(new DefaultComboBoxModel(new String[] { "00", "01", "02", "03", "04", "05", "06",
+							"07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21",
+							"22", "23", "24", "25", "26", "27", "28", "29", "30", "31" }));
+					yearmonth.setModel(new DefaultComboBoxModel(new String[] { "00", "01", "02", "03", "04", "05", "06",
+							"07", "08", "09", "10", "11", "12" }));
 					frame.repaint();
 					frame.setVisible(true);
 				}
 			}
 		});
-		
-		
+
 		for (int i = 0; i < comboDate.getItemCount(); i++) {
-			if(p.getSellByDate().substring(0,1).equals("1")){	
+			if (p.getSellByDate().substring(0, 1).equals("1")) {
 				comboDate.setSelectedIndex(0);
 				break;
 			} else {
@@ -312,60 +306,77 @@ public class ProductModifySub extends JPanel {
 				break;
 			}
 		}
-		
+
 		int selectMonth = Integer.parseInt(p.getSellByDate().substring(3));
 		System.out.println(p.getSellByDate().substring(3) + "개월");
 		for (int i = 0; i < monthday.getItemCount(); i++) {
-			if(selectMonth == i){
+			if (selectMonth == i) {
 				monthday.setSelectedIndex(i);
 				break;
 			}
 		}
-		int selectYear = Integer.parseInt(p.getSellByDate().substring(1,3));
+		int selectYear = Integer.parseInt(p.getSellByDate().substring(1, 3));
 		for (int i = 0; i < yearmonth.getItemCount(); i++) {
-			if(selectYear == i){
+			if (selectYear == i) {
 				yearmonth.setSelectedIndex(i);
 				break;
 			}
 		}
-		
+
 		reviseButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-				 int checkPgCode = catInput.getSelectedIndex() + 1;
-	               int checkManuCode = nameInput.getSelectedIndex() + 1;
-	               String savePgCode = "";
-	               String saveManuCode = "";
-	               if (checkPgCode < 10) {
-	                  savePgCode = "0" + checkPgCode;
-	               } else {
-	                  savePgCode = checkPgCode + "";
-	               }
+				if (comInput.getText().trim().equals("") || textField_1.getText().trim().equals("")
+						|| sellInput.getText().trim().equals("")) {
+					JOptionPane.showMessageDialog(null, "입력값에 공백이 있습니다.");
+					return;
+				}
 
-	               if (checkManuCode < 10) {
-	                  saveManuCode = "000" + checkManuCode;
-	               } else if (checkManuCode < 100) {
-	                  saveManuCode = "00" + checkManuCode;
-	               } else if (checkManuCode < 1000) {
-	                  saveManuCode = "0" + checkManuCode;
-	               } else {
-	                  saveManuCode = checkManuCode + "";
-	               }
-				
-				pc.modifyProduct(new Product(savePgCode, saveManuCode, comInput.getText(), Integer.parseInt(sellInput.getText().trim()), Integer.parseInt(textField_1.getText().trim()),
-	                     (comboDate.getSelectedIndex() == 0 ? "1" : "2") + yearmonth.getSelectedItem()
-                         + monthday.getSelectedItem()),p);
+				System.out.println(textField_1.getText());
+				System.out.println(sellInput.getText());
+
+				if (!textField_1.getText().trim().matches("^[0-9]*$")
+						|| !sellInput.getText().trim().matches("^[0-9]*$")) {
+					JOptionPane.showMessageDialog(null, "제품가격, 발주가격은 숫자만 입력 가능합니다.");
+					return;
+				}
+
+				int checkPgCode = catInput.getSelectedIndex() + 1;
+				int checkManuCode = nameInput.getSelectedIndex() + 1;
+				String savePgCode = "";
+				String saveManuCode = "";
+				if (checkPgCode < 10) {
+					savePgCode = "0" + checkPgCode;
+				} else {
+					savePgCode = checkPgCode + "";
+				}
+
+				if (checkManuCode < 10) {
+					saveManuCode = "000" + checkManuCode;
+				} else if (checkManuCode < 100) {
+					saveManuCode = "00" + checkManuCode;
+				} else if (checkManuCode < 1000) {
+					saveManuCode = "0" + checkManuCode;
+				} else {
+					saveManuCode = checkManuCode + "";
+				}
+
+				pc.modifyProduct(new Product(savePgCode, saveManuCode, comInput.getText(),
+						Integer.parseInt(sellInput.getText().trim()), Integer.parseInt(textField_1.getText().trim()),
+						(comboDate.getSelectedIndex() == 0 ? "1" : "2") + yearmonth.getSelectedItem()
+								+ monthday.getSelectedItem()),
+						p);
 				JOptionPane.showMessageDialog(null, "수정완료");
 				mainPanel.getMainPanel().removeAll();
 				mainPanel.getMainPanel().add(new ProductModifyMain(frame, mainPanel));
 				mainPanel.repaint();
 			}
 		});
-		deleteButton.addActionListener(new ActionListener() {	
+		deleteButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				pc.deleteProduct(p.getBarcode());	
+				pc.deleteProduct(p.getBarcode());
 				JOptionPane.showMessageDialog(null, "삭제완료");
 				mainPanel.getMainPanel().removeAll();
 				mainPanel.getMainPanel().add(new ProductModifyMain(frame, mainPanel));

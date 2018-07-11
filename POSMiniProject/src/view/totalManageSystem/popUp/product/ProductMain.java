@@ -175,7 +175,7 @@ public class ProductMain extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				if (MainFrame.popUpMainFrameCheck) {
-					new GroupManage(new String("product"), true,"","");
+					new GroupManage(new String("product"), true, "", "");
 					MainFrame.popUpMainFrameCheck = false;
 				}
 			}
@@ -202,14 +202,14 @@ public class ProductMain extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				if (MainFrame.popUpMainFrameCheck) {
-					int tempCode = comboBox2.getSelectedIndex()+1;
+					int tempCode = comboBox2.getSelectedIndex() + 1;
 					String saveCode = "";
-					if(tempCode < 10) {
+					if (tempCode < 10) {
 						saveCode = "0" + tempCode;
 					} else {
-						saveCode = tempCode+"";
+						saveCode = tempCode + "";
 					}
-					new GroupManage(new String("product"), false,saveCode,comboBox2.getSelectedItem().toString());
+					new GroupManage(new String("product"), false, saveCode, comboBox2.getSelectedItem().toString());
 					MainFrame.popUpMainFrameCheck = false;
 				}
 			}
@@ -225,7 +225,7 @@ public class ProductMain extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				if (MainFrame.popUpMainFrameCheck) {
-					new GroupManage(new String("manufacturer"), true,"","");
+					new GroupManage(new String("manufacturer"), true, "", "");
 					MainFrame.popUpMainFrameCheck = false;
 				}
 			}
@@ -242,19 +242,19 @@ public class ProductMain extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				if (MainFrame.popUpMainFrameCheck) {
-					int tempCode = comboBox.getSelectedIndex()+1;
+					int tempCode = comboBox.getSelectedIndex() + 1;
 					String saveCode = "";
-					
-					if(tempCode < 10){
+
+					if (tempCode < 10) {
 						saveCode = "000" + tempCode;
-					} else if(tempCode < 100){
+					} else if (tempCode < 100) {
 						saveCode = "00" + tempCode;
-					} else if (tempCode < 1000){
+					} else if (tempCode < 1000) {
 						saveCode = "0" + tempCode;
 					} else {
-						saveCode = tempCode+"";
+						saveCode = tempCode + "";
 					}
-					new GroupManage(new String("manufacturer"), false,saveCode,comboBox.getSelectedItem()+"");
+					new GroupManage(new String("manufacturer"), false, saveCode, comboBox.getSelectedItem() + "");
 					MainFrame.popUpMainFrameCheck = false;
 				}
 			}
@@ -275,8 +275,8 @@ public class ProductMain extends JPanel {
 		add(yearmonth);
 
 		monthday.setModel(new DefaultComboBoxModel(
-				new String[] { "00","01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12" }));
-		yearmonth.setModel(new DefaultComboBoxModel(new String[] { "00","01", "02", "03", "04", "05" }));
+				new String[] { "00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12" }));
+		yearmonth.setModel(new DefaultComboBoxModel(new String[] { "00", "01", "02", "03", "04", "05" }));
 
 		Calendar c = Calendar.getInstance();
 		comboDate.addItemListener(new ItemListener() {
@@ -286,18 +286,18 @@ public class ProductMain extends JPanel {
 				Object a = e.getItem();
 
 				if (comboDate.getSelectedIndex() == 0) {
-					monthday.setModel(new DefaultComboBoxModel(
-							new String[] { "00","01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12" }));
+					monthday.setModel(new DefaultComboBoxModel(new String[] { "00", "01", "02", "03", "04", "05", "06",
+							"07", "08", "09", "10", "11", "12" }));
 					yearmonth.setModel(new DefaultComboBoxModel(new String[] { "01", "02", "03", "04", "05" }));
 					frame.repaint();
 					frame.setVisible(true);
 				}
 				if (comboDate.getSelectedIndex() == 1) {
-					monthday.setModel(new DefaultComboBoxModel(new String[] { "00","01", "02", "03", "04", "05", "06", "07",
-							"08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22",
-							"23", "24", "25", "26", "27", "28", "29", "30", "31" }));
-					yearmonth.setModel(new DefaultComboBoxModel(
-							new String[] { "00","01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12" }));
+					monthday.setModel(new DefaultComboBoxModel(new String[] { "00", "01", "02", "03", "04", "05", "06",
+							"07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21",
+							"22", "23", "24", "25", "26", "27", "28", "29", "30", "31" }));
+					yearmonth.setModel(new DefaultComboBoxModel(new String[] { "00", "01", "02", "03", "04", "05", "06",
+							"07", "08", "09", "10", "11", "12" }));
 					frame.repaint();
 					frame.setVisible(true);
 				}
@@ -308,48 +308,52 @@ public class ProductMain extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				String checkStr = textField_3.getText();
-	            String checkStr2 = textField_4.getText();
-	            if (checkStr.matches("^[0-9]*$") && checkStr2.matches("^[0-9]*$")) {
+				String checkStr2 = textField_4.getText();
+				if (!comboBox2.getSelectedItem().equals("제품 분류를 추가해주세요...") && ! comboBox.getSelectedItem().equals("제조 회사를 추가해주세요...")) {
+					if (checkStr.matches("^[0-9]*$") && checkStr2.matches("^[0-9]*$")) {
 
-	               int checkPgCode = comboBox2.getSelectedIndex() + 1;
-	               int checkManuCode = comboBox.getSelectedIndex() + 1;
-	               String savePgCode = "";
-	               String saveManuCode = "";
-	               if (checkPgCode < 10) {
-	                  savePgCode = "0" + checkPgCode;
-	               } else {
-	                  savePgCode = checkPgCode + "";
-	               }
+						int checkPgCode = comboBox2.getSelectedIndex() + 1;
+						int checkManuCode = comboBox.getSelectedIndex() + 1;
+						String savePgCode = "";
+						String saveManuCode = "";
+						if (checkPgCode < 10) {
+							savePgCode = "0" + checkPgCode;
+						} else {
+							savePgCode = checkPgCode + "";
+						}
 
-	               if (checkManuCode < 10) {
-	                  saveManuCode = "000" + checkManuCode;
-	               } else if (checkManuCode < 100) {
-	                  saveManuCode = "00" + checkManuCode;
-	               } else if (checkManuCode < 1000) {
-	                  saveManuCode = "0" + checkManuCode;
-	               } else {
-	                  saveManuCode = checkManuCode + "";
-	               }
+						if (checkManuCode < 10) {
+							saveManuCode = "000" + checkManuCode;
+						} else if (checkManuCode < 100) {
+							saveManuCode = "00" + checkManuCode;
+						} else if (checkManuCode < 1000) {
+							saveManuCode = "0" + checkManuCode;
+						} else {
+							saveManuCode = checkManuCode + "";
+						}
 
-	               Product product = new Product(savePgCode, saveManuCode, textField_1.getText(),
-	                     Integer.parseInt(textField_3.getText().trim()), Integer.parseInt(textField_4.getText().trim()),
-	                     (comboDate.getSelectedIndex() == 0 ? "1" : "2") + yearmonth.getSelectedItem()
-	                           + monthday.getSelectedItem());
-	               pct.addProduct(product);
+						Product product = new Product(savePgCode, saveManuCode, textField_1.getText(),
+								Integer.parseInt(textField_3.getText().trim()),
+								Integer.parseInt(textField_4.getText().trim()),
+								(comboDate.getSelectedIndex() == 0 ? "1" : "2") + yearmonth.getSelectedItem()
+										+ monthday.getSelectedItem());
+						pct.addProduct(product);
 
-	               comboBox.setSelectedIndex(0);
-	               comboBox2.setSelectedIndex(0);
-	               comboDate.setSelectedIndex(0);
-	               monthday.setSelectedIndex(0);
-	               yearmonth.setSelectedIndex(0);
-	               textField_1.setText("");
-	               textField_3.setText("");
-	               textField_4.setText("");
+						comboBox.setSelectedIndex(0);
+						comboBox2.setSelectedIndex(0);
+						comboDate.setSelectedIndex(0);
+						monthday.setSelectedIndex(0);
+						yearmonth.setSelectedIndex(0);
+						textField_1.setText("");
+						textField_3.setText("");
+						textField_4.setText("");
 
-	            } else {
-	               JOptionPane.showMessageDialog(null, "제품가격과 발주가격은 숫자만 입력 가능합니다. \n확인해 주세요");
-	            }
-				
+					} else {
+						JOptionPane.showMessageDialog(null, "제품가격과 발주가격은 숫자만 입력 가능합니다. \n확인해 주세요");
+					}
+				} else {
+					JOptionPane.showMessageDialog(null, "상품분류 또는 제조회사를 추가해주세요.");
+				}
 			}
 		});
 

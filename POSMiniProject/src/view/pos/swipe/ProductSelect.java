@@ -209,7 +209,7 @@ public class ProductSelect extends JPanel {
 					if (jtable.getRowCount() == 0) {
 						// 체크를 통해 넘겨받은 값 테이블에 저장
 						for (int i = 0; i < basketData.length; i++) {
-							if (!basketData[i][2].toString().equals("0") || basketData[i][2] != "") {
+							if (!basketData[i][2].toString().trim().equals("0") || basketData[i][2].toString().trim() != "") {
 								Object[] rowData = new Object[4];
 								rowData[0] = basketData[i][0];
 								rowData[1] = basketData[i][1];
@@ -221,7 +221,7 @@ public class ProductSelect extends JPanel {
 					} else { // 오른쪽 테이블의 값이 기존에 있을 경우
 						for (int j = 0; j < basketData.length; j++) {
 							// 기존 테이블과 값이 겹치지 않을경우 해당 값을 테이블에 넣기 위해서 boolean으로
-							if (!basketData[j][2].toString().equals("0")||basketData[j][2] != "") {
+							if (!basketData[j][2].toString().trim().equals("0")&&basketData[j][2].toString().trim() != "") {
 								boolean addRow = false;
 								for (int i = 0; i < jtable.getRowCount(); i++) {
 									// 오른쪽 테이블의 기존값이 추가될 값이랑 일치할 경우 = 같은 제품을 또

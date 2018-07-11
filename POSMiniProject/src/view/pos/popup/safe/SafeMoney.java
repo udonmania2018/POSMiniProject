@@ -82,7 +82,14 @@ public class SafeMoney extends JPanel {
 		// list = m.getMoneys();
 
 		Moneys moneys = m.selectSafeMoneys();
-		int[] marr = moneys.getMoneys();
+		int[] marr = new int[8];
+		if(moneys == null){
+			for (int i = 0; i < marr.length; i++) {
+				marr[i] = 0;
+			}
+		} else {
+			marr = moneys.getMoneys();
+		}
 
 		/*
 		 * for(int i = 0 ; i <marr.length;i++){ System.out.println(marr[i]); }
@@ -146,17 +153,25 @@ public class SafeMoney extends JPanel {
 						boolean checkPatter = temp.toString().matches("^[0-9]*$");
 						if (!checkPatter) {
 							JOptionPane.showMessageDialog(null, "숫자만 입력 가능합니다.");
-							break;
+							return;
 						}
+						if(temp.toString().trim() == "" || temp == null){
+							temp = temp.toString()+"0";
+						}
+						
 						if (Integer.parseInt(inMoneys.toString()) - Integer.parseInt(temp.toString()) < 0) {
 							JOptionPane.showMessageDialog(null, "저장 금액이 보유 현금보다 많습니다.\n확인해 주세요");
-							break;
+							return;
 						}
 						saveMoneys[i] = Integer.parseInt(temp.toString().trim());
 					} else {
 						saveMoneys[i] = 0;
 					}
 				}
+				for (int i = 0; i < saveMoneys.length; i++) {
+					POSMainFrame.counterMoneys[i] = POSMainFrame.counterMoneys[i] - saveMoneys[i];
+				}
+				
 				Moneys mo = new Moneys(saveMoneys);
 				pc.saveMoney(mo);
 				safeMoneyPanel.removeAll();

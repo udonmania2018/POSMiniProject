@@ -361,7 +361,9 @@ public class ProductOrder extends JPanel {
 					if (order_table.getRowCount() == 0) {
 						// 체크를 통해 넘겨받은 값 테이블에 저장
 						for (int i = 0; i < basketData.length; i++) {
-							if (!basketData[i][2].toString().equals("0") || basketData[i][2] != "" ) {
+							if (!(basketData[i][2].toString().trim().equals("0")) && basketData[i][2].toString().trim() != "" ) {
+								System.out.println("들어옴");
+								System.out.println(basketData[i][2].toString() +" / toString");
 								Object[] rowData = new Object[6];
 								rowData[0] = basketData[i][0];
 								rowData[1] = basketData[i][1];
@@ -383,7 +385,7 @@ public class ProductOrder extends JPanel {
 						for (int j = 0; j < basketData.length; j++) {
 							// 기존 테이블과 값이 겹치지 않을경우 해당 값을 테이블에 넣기 위해서 boolean으로
 							// 유효성 체크
-							if (!basketData[j][2].toString().equals("0") ||  basketData[j][2] != "") {
+							if (!basketData[j][2].toString().trim().equals("0") &&  basketData[j][2].toString().trim() != "") {
 								boolean addRow = false;
 								for (int i = 0; i < order_table.getRowCount(); i++) {
 									// 오른쪽 테이블의 기존값이 추가될 값이랑 일치할 경우 = 같은 제품을 또

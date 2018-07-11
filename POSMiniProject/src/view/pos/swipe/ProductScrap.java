@@ -298,7 +298,7 @@ public class ProductScrap extends JPanel {
 					if (ProductScrap_table.getRowCount() == 0) {
 						// 체크를 통해 넘겨받은 값 테이블에 저장
 						for (int i = 0; i < basketData.length; i++) {
-							if (!basketData[i][4].toString().equals("0") || basketData[i][4] != "") {
+							if (!basketData[i][4].toString().trim().equals("0") && basketData[i][4].toString().trim() != "") {
 							Object[] rowData = new Object[5];
 							rowData[0] = basketData[i][0];
 							rowData[1] = basketData[i][1];
@@ -312,12 +312,9 @@ public class ProductScrap extends JPanel {
 						for (int j = 0; j < basketData.length; j++) {
 							// 기존 테이블과 값이 겹치지 않을경우 해당 값을 테이블에 넣기 위해서 boolean으로
 							// 유효성 체크
-							if (!basketData[j][4].toString().equals("0")|| basketData[j][4] != "") {
+							if (!basketData[j][4].toString().trim().equals("0") && basketData[j][4].toString().trim() != "") {
 								boolean addRow = false;
 								for (int i = 0; i < ProductScrap_table.getRowCount(); i++) {
-									// 오른쪽 테이블의 기존값이 추가될 값이랑 일치할 경우 = 같은 제품을 또
-									// 추가할
-									// 경우
 									if (ProductScrap_table.getValueAt(i, 0).toString()
 											.equals(basketData[j][0].toString())) {
 										// 기존 테이블의 값 수정
@@ -352,34 +349,31 @@ public class ProductScrap extends JPanel {
 		orderendbtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// ArrayList<ProductStock> orderList = new
-				// ArrayList<ProductStock>();
+				Label:
 				for (int i = 0; i < ProductScrap_table.getRowCount(); i++) {
-					for (int j = 0; j < stockList.size(); j++) {
+					for (int j = 0; j < stockList.size();j++) {
 						if (ProductScrap_table.getValueAt(i, 0).toString().equals(stockList.get(j).getBarcode())) {
 							int su = stockList.get(j).getQuantity()
-									- Integer.parseInt(ProductScrap_table.getValueAt(j, 3).toString());
-							System.out.println(su);
-							if (su < 0) {
+									- Integer.parseInt(ProductScrap_table.getValueAt(i, 3).toString().trim());
+							if (su <= 0) {
 								File file = new File(stockList.get(j).getBarcodePath());
 								file.delete();
 								stockList.remove(j);
-								break;
+								continue Label;
 							} else {
 								stockList.get(j).setQuantity(su);
-								break;
+								continue Label;
 							}
 						}
 					}
-					/*
-					 * ProductStock temp = new
-					 * ProductStock(ProductScrap_table.getValueAt(i,
-					 * 0).toString(), Integer.parseInt(order_table.getValueAt(i,
-					 * 4).toString()), null,order_table.getValueAt(i,
-					 * 1).toString());
-					 * temp.setSellByDate(order_table.getValueAt(i,
-					 * 5).toString()); orderList.add(temp);
-					 */
+/*					  ProductStock temp = new
+					  ProductStock(ProductScrap_table.getValueAt(i,
+					  0).toString(), Integer.parseInt(order_table.getValueAt(i,
+					  4).toString()), null,order_table.getValueAt(i,
+					  1).toString());
+					  temp.setSellByDate(order_table.getValueAt(i,
+					  5).toString()); orderList.add(temp);*/
+					
 				}
 				pc.deleteProductStock(stockList);
 				contentPanel.removeAll();
